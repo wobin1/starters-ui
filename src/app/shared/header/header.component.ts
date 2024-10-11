@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  dropDown:boolean = false;
 
     menu = [
       {
@@ -47,5 +48,9 @@ export class HeaderComponent {
 
   route(page:string){
     this.router.navigate([page]);
+  }
+
+  showDropDown(){
+    this.dropDown = !this.dropDown
   }
 }
