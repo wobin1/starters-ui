@@ -67,11 +67,7 @@ export class ProductsComponent {
     {
       "name": "Garlic",
       "amountSold": 120,
-    },
-    {
-      "name": "Ginger",
-      "amountSold": 120,
-    },
+    }
   ]
 
   toggleWareHouse(id:string){

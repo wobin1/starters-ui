@@ -6,13 +6,15 @@ import { CommonModule } from '@angular/common';
 import { AppLayoutRoutingModule } from './app-layout-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { AppLayoutComponent } from './app-layout.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductsComponent } from './products/products.component';
 import { CreateProductComponent } from './products/create-product/create-product.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { InventoryTrackerComponent } from './inventory-tracker/inventory-tracker.component';
 import { MonthlyInventoryComponent } from './monthly-inventory/monthly-inventory.component';
+import { SalesComponent } from './sales/sales.component';
+import { PurchasesComponent } from './purchases/purchases.component';
 
 
 
@@ -25,6 +27,8 @@ import { MonthlyInventoryComponent } from './monthly-inventory/monthly-inventory
     ProductDetailComponent,
     InventoryTrackerComponent,
     MonthlyInventoryComponent,
+    SalesComponent,
+    PurchasesComponent,
 
   ],
   imports: [
@@ -33,7 +37,8 @@ import { MonthlyInventoryComponent } from './monthly-inventory/monthly-inventory
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PrimengModule
+    PrimengModule,
+    FormsModule
   ]
 })
 export class AppLayoutModule { }

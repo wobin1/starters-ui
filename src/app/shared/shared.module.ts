@@ -9,6 +9,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { PrimengModule } from '../primeng/primeng.module';
 import { SubMenuComponent } from './sub-menu/sub-menu.component';
 import { ItemListComponent } from './item-list/item-list.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 
@@ -21,7 +22,8 @@ import { ItemListComponent } from './item-list/item-list.component';
     SubHeaderComponent,
     ProductCardComponent,
     SubMenuComponent,
-    ItemListComponent
+    ItemListComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { ItemListComponent } from './item-list/item-list.component';
     SubHeaderComponent,
     ProductCardComponent,
     SubMenuComponent,
-    ItemListComponent
+    ItemListComponent,
+    PaginationComponent
 
   ]
 })

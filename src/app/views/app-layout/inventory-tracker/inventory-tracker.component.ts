@@ -33,6 +33,31 @@ export class InventoryTrackerComponent {
       "productCount": "50",
     }
   ]
+  wareHouses = [
+    {
+      "id": "1",
+      "name": "Warehouse A",
+      "address": "No 2 B Close off 11 crescent, Kado | Cold Room",
+      "productCount": "80",
+      "itemCount": "9000"
+    },
+
+    {
+      "id": "2",
+      "name": "Warehouse B",
+      "address": "No 6 C Close off 11 crescent, Qwarinpa | Cold Room",
+      "productCount": "30",
+      "itemCount": "11,000"
+    },
+
+    {
+      "id": "3",
+      "name": "Warehouse C",
+      "address": "No 2 H Close off 11 crescent, Garki | Cold Room",
+      "productCount": "50",
+      "itemCount": "31,000"
+    }
+  ]
 
   tableHeader = ['Name', 'Location', 'Inventory date', 'status', 'progress bar']
 
