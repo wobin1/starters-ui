@@ -72,7 +72,7 @@
    <!-- create product modal -->
    <div *ngIf="isCreateProduct" class="hs-overlay size-full fixed inset-0 bg-gray-900/45  z-[999] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-bg-gray-on-hover-cards-label">
     <div class="hs-overlay-open:mt-0 hs-overlay-open:duration-500 mt-0 ease-out transition-all w-full lg:max-w-[700px] mx-auto">
-      <div class="h-full w-full flex flex-col mt-[60px] mb-[60px]  bg-white border shadow-sm rounded-xl pointer-events-auto">
+      <div class="h-full w-full flex flex-col mt-0 md:mt-0 lg:mt-[60px]  mb-[60px]  bg-white border shadow-sm rounded-xl pointer-events-auto">
         <div class="flex justify-between items-center py-3 px-4 border-b">
           <h3 id="hs-bg-gray-on-hover-cards-label" class="font-bold text-gray-800">
             Create New Product
@@ -89,7 +89,7 @@
             <div class="section-title font-bold ">Basic information</div>
 
             <!-- Basic information -->
-            <div class="grid grid-cols-2 gap-4 border-b py-2 pb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 border-b py-2 pb-8">
 
 
               <div>
@@ -170,7 +170,7 @@
           <div class="py-4 mt-4">
             <div class="section-title font-bold">Sale information</div>
 
-            <div class="grid grid-cols-2 gap-4 border-b py-2 pb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 border-b py-2 pb-8">
 
 
               <div>
