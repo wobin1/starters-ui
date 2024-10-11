@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { MenuComponent } from './../../../../../../seedo-agro/seedo/src/app/shared/component/menu/menu.component';
 import { Component } from '@angular/core';
 
 @Component({
