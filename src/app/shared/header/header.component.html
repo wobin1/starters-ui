@@ -2,13 +2,13 @@
   <!-- logo -->
   <div class="text-lg font-semibold flex gap-4 items-center cursor-pointer text-gray-700">
       <img src="assets/logo.png"  class="" alt="">
-      Starters Events Management Ltd
+      <span class="hidden md:block lg:block sm:hidden">Starters Events Management Ltd</span>
   </div>
 
   <!-- menu -->
   <div class="flex items-center gap-8 cursor-pointer">
    <ng-container *ngFor="let row of menu">
-    <nav (click)="route(row.route)" class="flex gap-1 text-sm text-gray-500 hover:text-gray-800 active:scale-95">
+    <nav (click)="route(row.route)" class="whitespace-nowrap lg:flex md:hidden hidden gap-1 text-sm text-gray-500 hover:text-gray-800 active:scale-95">
       <img src={{row.icon}} class="w-5" alt="">
       {{row.name}}
     </nav>
@@ -32,6 +32,12 @@
           logout
         </div>
       </div>
+     </span>
+
+     <span class="block md:block lg:hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+      </svg>
      </span>
   </div>
 </div>

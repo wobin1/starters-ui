@@ -7,6 +7,7 @@ import { ChartModule } from 'primeng/chart';
 import { StyleClassModule } from 'primeng/styleclass';
 import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
+import { CarouselModule } from 'primeng/carousel';
 
 
 const primeNG: any = [
@@ -16,7 +17,8 @@ const primeNG: any = [
   ChartModule,
   StyleClassModule,
   GalleriaModule,
-  ImageModule
+  ImageModule,
+  CarouselModule
 ]
 
 
