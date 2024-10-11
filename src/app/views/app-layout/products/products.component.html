@@ -1,4 +1,4 @@
-<div class="section px-16">
+<div class="section px-4 lg:px-16">
   <app-sub-header
   pageTitle="Products"
   action3Name="Create New Product"
@@ -15,7 +15,7 @@
    <!-- warehouse product section -->
    <ng-container  *ngFor="let item of wareHouses">
     <div class="warehouses-section h-full bg-gray-100/65 p-8  flex flex-col mt-4">
-      <div class="flex justify-between w-full">
+      <div class="grid md:grid-col-2 gap-2 md:gap-2 lg:gap-0 lg:grid-cols-3 w-full">
         <div class="warehouse-info flex items-center gap-8">
           <div class="flex items-center gap-4">
             <span>
@@ -29,14 +29,13 @@
 
             <span class="text-xs text-gray-500 p-1 px-4 rounded-full bg-gray-200/85">{{item.productCount}} products {{item.itemCount}} items</span>
           </div>
-
-          <div class="warehouse-address  text-gray-700">
-            {{item.address}}
-          </div>
-
         </div>
 
-        <div (click)="toggleWareHouse(item.id)" class="font-bold">
+        <div class="warehouse-address  text-gray-700">
+          {{item.address}}
+        </div>
+
+        <div (click)="toggleWareHouse(item.id)" class="font-bold flex justify-end items-center">
           <span >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
@@ -52,7 +51,7 @@
       </div>
 
       <!-- products -->
-       <div *ngIf="isWareHouse && currentWareHouseId===item.id" class="py-10 grid grid-cols-4 gap-4 ">
+       <div *ngIf="isWareHouse && currentWareHouseId===item.id" class="py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
         <ng-container *ngFor="let item of products">
           <button routerLink="/app/product/2">
             <app-product-card productName={{item.name}} amountSold={{item.amountSold}}></app-product-card>
