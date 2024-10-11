@@ -1,0 +1,29 @@
+<div class="flex justify-between items-center py-4 bg-primary  shadow-md px-16">
+  <!-- logo -->
+  <div class="text-lg font-semibold flex gap-4 items-center cursor-pointer text-gray-700">
+      <img src="assets/logo.png"  class="" alt="">
+      Starters Events Management Ltd
+  </div>
+
+  <!-- menu -->
+  <div class="flex items-center gap-8 cursor-pointer">
+   <ng-container *ngFor="let row of menu">
+    <nav (click)="route(row.route)" class="flex gap-1 text-sm text-gray-500 hover:text-gray-800 active:scale-95">
+      <img src={{row.icon}} class="w-5" alt="">
+      {{row.name}}
+    </nav>
+   </ng-container>
+  </div>
+
+  <div class="flex items-center gap-4" >
+     <ng-container *ngFor=" let row of ['assets/icons/settings.png', 'assets/icons/bell.png']" >
+      <span>
+        <img src={{row}} class="w-6 active:scale-95" alt="">
+      </span>
+     </ng-container>
+
+     <span>
+      <img src="assets/icons/avater.png" class="w-6 active:scale-95" alt="">
+     </span>
+  </div>
+</div>

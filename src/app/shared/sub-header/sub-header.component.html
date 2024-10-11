@@ -1,0 +1,14 @@
+<div class="flex justify-between py-6">
+  <h1 class="font-bold items-center text-2xl uppercase text-gray-800">{{pageTitle}}</h1>
+
+  <div class="action-button cursor-pointer text-gray-500 flex items-center gap-8">
+    <div (click)="action1Click()" class="active:scale-95 hover:text-gray-800">{{action1Name}}</div>
+    <div (click)="action2Click()" class="active:scale-95 hover:text-gray-800">{{action2Name}}</div>
+    <div (click)="action3Click()" class={{buttonStyle}}>
+      <span class="flex items-center gap-1">
+        <img src='{{icon}}' class="h-5" alt="">
+        {{action3Name}}
+      </span>
+    </div>
+  </div>
+</div>
