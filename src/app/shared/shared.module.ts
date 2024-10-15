@@ -10,6 +10,10 @@ import { PrimengModule } from '../primeng/primeng.module';
 import { SubMenuComponent } from './sub-menu/sub-menu.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ToastComponent } from './toast/toast.component';
+import { CreateProductComponent } from './create-product/create-product.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EmptyListComponent } from './empty-list/empty-list.component';
 
 
 
@@ -23,11 +27,16 @@ import { PaginationComponent } from './pagination/pagination.component';
     ProductCardComponent,
     SubMenuComponent,
     ItemListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ToastComponent,
+    CreateProductComponent,
+    EmptyListComponent,
   ],
   imports: [
     CommonModule,
-    PrimengModule
+    PrimengModule,
+    ReactiveFormsModule
+
   ],
   exports: [
     HeaderComponent,
@@ -37,7 +46,10 @@ import { PaginationComponent } from './pagination/pagination.component';
     ProductCardComponent,
     SubMenuComponent,
     ItemListComponent,
-    PaginationComponent
+    PaginationComponent,
+    ToastComponent,
+    CreateProductComponent,
+    EmptyListComponent,
 
   ]
 })

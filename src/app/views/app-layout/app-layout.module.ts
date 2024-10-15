@@ -9,7 +9,6 @@ import { AppLayoutComponent } from './app-layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductsComponent } from './products/products.component';
-import { CreateProductComponent } from './products/create-product/create-product.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { InventoryTrackerComponent } from './inventory-tracker/inventory-tracker.component';
 import { MonthlyInventoryComponent } from './monthly-inventory/monthly-inventory.component';
@@ -23,7 +22,6 @@ import { PurchasesComponent } from './purchases/purchases.component';
     AppLayoutComponent,
     DashboardComponent,
     ProductsComponent,
-    CreateProductComponent,
     ProductDetailComponent,
     InventoryTrackerComponent,
     MonthlyInventoryComponent,

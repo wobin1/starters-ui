@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
+  providers: [MessageService]
 })
 export class ProductDetailComponent {
   istoggleUpdateProduct:boolean = true;
+  isSubmitted:boolean = false;
   isUpdateProduct:boolean = false;
+  loading:boolean = false;
   isWareHouse:boolean = false;
   isProductUpdated: boolean = false;
+  updateQuantityForm!:any;
   images: any[] = [
     {
         itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
@@ -101,7 +107,11 @@ updatedQuantityData = [
   cards = [{"title": "On hand", "figure": 234}, {"title": "To be Delivered", "figure": 64}, {"title": "To be ordered", "figure": 50}]
   responsiveOptions: any[] | undefined;
 
-  constructor(private router: Router){}
+  constructor(private router: Router,
+              private fb: FormBuilder,
+              private messageService: MessageService){}
+
+
 
 
     ngOnInit() {
@@ -119,12 +129,21 @@ updatedQuantityData = [
                 numVisible: 1
             }
         ];
+
+        this.updateQuantityForm = this.fb.group({
+          // Form fields here
+          quantity: ['', Validators.required],
+          unit: ['', [Validators.required]],
+          note: ['', [Validators.required]],
+          // ... other fields
+        });
     }
 
   route(){
     this.router.navigateByUrl('/app/product')
     console.log('router click')
   }
+
 
 
 
@@ -141,6 +160,37 @@ updatedQuantityData = [
 
   toggleUpdateProduct(){
     this.isUpdateProduct =!this.isUpdateProduct;
+  }
+
+  get f(){
+    return this.updateQuantityForm.controls;
+  }
+
+  updateQuantity(){
+    this.isSubmitted=!this.isSubmitted;
+    this.loading = true;
+
+    if(this.updateQuantityForm.invalid){
+      console.log('form invalid');
+      return;
+    }
+
+    setTimeout(() => {
+      this.showSuccess('quantity updated successfully!')
+      this.loading = false;
+
+    }, 2000)
+
+  }
+
+
+  showSuccess(message: string) {
+    console.log('showSuccess')
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+  }
+
+  showError(message: string) {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 
 

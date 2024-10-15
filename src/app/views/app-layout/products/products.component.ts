@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss'
+  styleUrl: './products.component.scss',
+  providers: [MessageService]
 })
 export class ProductsComponent {
   isWareHouse: boolean = false;
+  isSubmitted: boolean = false;
   currentWareHouseId!: string;
   isCreateProduct: boolean = false;
   wareHouses = [
@@ -35,40 +39,13 @@ export class ProductsComponent {
     }
   ]
 
-  products = [
-    {
-      "name": "chiken",
-      "amountSold": 120,
-    },
-    {
-      "name": "Beef",
-      "amountSold": 120,
-    },
-    {
-      "name": "catfish",
-      "amountSold": 120,
-    },
-    {
-      "name": "Tomatoes",
-      "amountSold": 120,
-    },
-    {
-      "name": "Flour",
-      "amountSold": 120,
-    },
-    {
-      "name": "Flour",
-      "amountSold": 120,
-    },
-    {
-      "name": "Yam",
-      "amountSold": 120,
-    },
-    {
-      "name": "Garlic",
-      "amountSold": 120,
-    }
-  ]
+  products:any = [];
+
+  constructor(private messageService: MessageService, private productService: ProductService){}
+
+  ngOnInit(){
+    this.products = this.productService.getProducts()
+  }
 
   toggleWareHouse(id:string){
     this.isWareHouse =!this.isWareHouse;
@@ -79,6 +56,21 @@ export class ProductsComponent {
     this.isCreateProduct =!this.isCreateProduct;
   }
 
+  saveProduct(){
+    this.isSubmitted = !this.isSubmitted;
+    setTimeout(() => {
+      this.showSuccess('product saved successfully!')
+    })
 
+  }
+
+  showSuccess(message: string) {
+    console.log('showSuccess')
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+  }
+
+  showError(message: string) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+  }
 
 }

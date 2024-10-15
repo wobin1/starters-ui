@@ -1,4 +1,5 @@
-<div class="section px-16">
+<div class="section px-4 md:px-8 lg:px-16">
+  <p-toast/>
   <app-sub-menu currentURL="Detail" previouseRoute="products" (navigateTo)="route()"></app-sub-menu>
 
   <div class="section ">
@@ -10,9 +11,9 @@
     icon='assets/icons/add.png'
     buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="toggleUpdateProduct()"></app-sub-header>
 
-  <div class="layout1 flex gap-6  w-full bg-gray-100 p-6">
+  <div class="layout1 flex flex-col-reverse lg:flex-row gap-6  w-full bg-gray-100 p-6">
     <div class="side1 basis-[45%]">
-      <div class="card">
+      <div class="card flex justify-center">
         <p-galleria
           [value]="images"
           [responsiveOptions]="responsiveOptions"
@@ -29,8 +30,8 @@
         </p-galleria>
       </div>
 
-      <div class="mt-6 px-16 py-4 h-[300px] bg-white">
-        <div class="w-full flex justify-center">
+      <div class="mt-6 px-16 py-4 h-[300px] flex flex-col justify-center  bg-white">
+        <div class="w-full flex justify-center items-center">
           <h4>Barcode</h4>
         </div>
 
@@ -44,7 +45,7 @@
 
       <!-- cards section -->
       <div class="cards w-full">
-        <div class="layout-1 flex gap-4 w-full">
+        <div class="layout-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
 
           <ng-container *ngFor="let item of cards">
             <div class="flex flex-col gap-2 bg-white px-6 py-6 w-full">
@@ -73,7 +74,7 @@
           </div>
 
 
-          <div class="grid grid-cols-2 my-2 gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 my-2 gap-4">
             <div class="flex flex-col gap-1 ">
               <p class="text-sm text-gray-500"><span class=" text-gray-800">Product name:</span> Fish in Batter</p>
               <p class="text-sm text-gray-500"><span class=" text-gray-800">Top Vendor:</span> Mrs. Abubakar Global</p>
@@ -114,7 +115,7 @@
 
         <!-- Inventory Section -->
         <div class=" pt-6">
-          <div class="title flex justify-between">
+          <div class="title flex flex-col md:flex-row  justify-between">
             <div class="title flex gap-2 items-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-check" viewBox="0 0 16 16">
                 <path d="M10.854 8.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
@@ -136,7 +137,7 @@
               </button>
             </div>
           </div>
-          <div class="flex my-2 gap-16">
+          <div class="flex gap-16 mt-2">
             <div>
               <div class="text-sm flex justify-between">
                 <span class="font-medium">Quantity:</span>
@@ -177,7 +178,7 @@
  <!-- update Product modal -->
  <div *ngIf="isUpdateProduct" class="hs-overlay size-full fixed inset-0 bg-gray-900/45  z-[999] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-bg-gray-on-hover-cards-label">
   <div class="hs-overlay-open:mt-0 hs-overlay-open:duration-500 mt-0 ease-out transition-all w-full lg:max-w-[800px] mx-auto">
-    <div class="h-full w-full flex flex-col mt-[60px] mb-[60px]  bg-white border shadow-sm pointer-events-auto">
+    <form [formGroup]="updateQuantityForm" (ngSubmit)="updateQuantity()" class="h-full w-full flex flex-col mt-0 md:mt-0 lg:mt-[60px] mb-[60px]  bg-white border shadow-sm pointer-events-auto">
       <div class="flex justify-between items-center py-3 px-4 border-b">
         <h3 id="hs-bg-gray-on-hover-cards-label" class="font-bold text-gray-800">
           Update Quantity
@@ -188,14 +189,14 @@
         </button>
       </div>
 
-      <div class="p-4 w-full gap-8 flex ">
+      <div class="p-4 w-full gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 ">
 
         <div class="basis-1/1 w-full">
           <div class="image w-full">
             <img src="assets/images/image.png" class="object-cover w-full h-full max-h-[220px]" alt="">
           </div>
 
-          <div class="bg-white flex flex-col gap-2 p-4">
+          <div class="bg-white flex flex-col gap-2 p-1 md:p-4 lg:p-4">
             <p class="capitalize">Product</p>
             <h4 class="text-gray-800 text-xl font-bold uppercase">Cat Fish</h4>
             <p class="text-gray-500 w-[120px] text-center bg-gray-100 text-sm mt-1 px-1 py-1 rounded-full">Code: SWE-1</p>
@@ -210,34 +211,33 @@
 
 
             <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                New Quantity
-                <span class="text-red-500">*</span>
-              </label>
-                <input type="number" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Quantity">
-            </div>
-
-            <div class="mt-4">
-
               <div>
                 <label class="block text-gray-600 text-sm font-medium">
-                  Reason for Update
+                  New Quantity
                   <span class="text-red-500">*</span>
                 </label>
-                <select class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
-                  <option value="">Select Unit</option>
-                  <!-- dynamically fetched categories -->
-                  <option *ngFor="let warehouse of wareHouses">{{warehouse.name}}</option>
-                </select>
+                  <input formControlName="quantity" [ngClass]="{'border-red-400': isSubmitted && f.quantity.errors}" type="number" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Quantity">
               </div>
 
-            </div>
+              <div class="mt-4">
+                  <label class="block text-gray-600 text-sm font-medium">
+                    Unit
+                    <span class="text-red-500">*</span>
+                  </label>
+                  <select formControlName="unit" [ngClass]="{'border-red-400': isSubmitted && f.unit.errors}" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
+                    <option value="">Select Unit</option>
 
-            <div class="mt-4">
-              <label class="block text-gray-600 text-sm font-medium">
-                Note
-              </label>
-              <textarea class="w-full bg-gray-100 h-[120px]" placeholder="Enter your text here"></textarea>
+                    <option *ngFor="let warehouse of wareHouses">{{warehouse.name}}</option>
+                  </select>
+              </div>
+
+              <div class="mt-4">
+                <label class="block text-gray-600 text-sm font-medium">
+                  Reason for update
+                </label>
+                <textarea formControlName="note" [ngClass]="{'border-red-400': isSubmitted && f.note.errors}"  class="w-full border p-2 bg-gray-100 h-[120px]" placeholder="Enter your text here"></textarea>
+              </div>
+
             </div>
 
           </div>
@@ -249,19 +249,18 @@
 
       <div class=" flex w-full justify-between items-center gap-x-2 py-3 px-4 border-t">
         <div></div>
-        <button (click)="toggleUpdatedProduct()" class="p-2 bg-gray-700 text-gray-400 text-sm">
-          Update Quantity
+        <button type="submit"  >
+          <p-button class="p-2 bg-gray-700 text-gray-400 text-sm" label="Update quantity" [loading]="loading"></p-button>
         </button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
-
 
 <!-- Updted Quantity modal -->
 <div *ngIf="isProductUpdated"  class="hs-overlay size-full fixed inset-0 bg-gray-900/45  z-[999] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-bg-gray-on-hover-cards-label">
   <div class="hs-overlay-open:mt-0 hs-overlay-open:duration-500 mt-0 ease-out transition-all w-full lg:max-w-[537px] mx-auto">
-    <div class="h-full w-full flex flex-col mt-[60px] mb-[60px]  bg-gray-100 border shadow-sm pointer-events-auto">
+    <div class="h-full w-full flex flex-col  mt-0 md:mt-0 lg:mt-[60px] mb-[60px]  bg-gray-100 border shadow-sm pointer-events-auto">
       <div class="flex justify-end items-center py-3 px-4 border-b">
 
         <button (click)="closeExistingModal()" type="button" class="size-8 inline-flex justify-center items-center gap-x-2  border border-transparent  text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none" aria-label="Close" data-hs-overlay="#hs-bg-gray-on-hover-cards">
@@ -281,7 +280,7 @@
           <div class="product text-2xl font-bold text-gray-800">Cat Fish</div>
          </div>
 
-         <div class="update-details bg-white px-12 py-4 w-full">
+         <div class="update-details bg-white px-8 md:px-12 lg:px-12 py-4 w-full">
 
            <div class="flex text-sm flex-col gap-4">
               <ng-container *ngFor="let item of updatedQuantityData">

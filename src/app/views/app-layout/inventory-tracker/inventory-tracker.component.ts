@@ -1,9 +1,11 @@
+import { MessageService } from 'primeng/api';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-inventory-tracker',
   templateUrl: './inventory-tracker.component.html',
-  styleUrl: './inventory-tracker.component.scss'
+  styleUrl: './inventory-tracker.component.scss',
+  providers: [MessageService]
 })
 export class InventoryTrackerComponent {
   isWareHouse: boolean = false;
@@ -58,6 +60,8 @@ export class InventoryTrackerComponent {
       "itemCount": "31,000"
     }
   ]
+
+  constructor(private messageService: MessageService){}
 
   tableHeader = ['Name', 'Location', 'Inventory date', 'status', 'progress bar']
 
@@ -116,6 +120,10 @@ export class InventoryTrackerComponent {
 
   toggleCreateProduct(){
     this.isCreateProduct =!this.isCreateProduct;
+  }
+
+  saveProduct(){
+
   }
 
 

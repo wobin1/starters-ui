@@ -10,6 +10,7 @@ import { ImageModule } from 'primeng/image';
 import { CarouselModule } from 'primeng/carousel';
 
 
+
 const primeNG: any = [
   ButtonModule,
   ProgressBarModule,

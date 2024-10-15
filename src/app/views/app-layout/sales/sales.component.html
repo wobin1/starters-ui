@@ -1,3 +1,6 @@
+
+<p-toast/>
+
 <div class="section px-4 lg:px-16">
   <app-sub-header
     pageTitle="Sales"
@@ -139,68 +142,70 @@
         </button>
       </div>
 
-      <div class="p-4 overflow-y-auto">
-        <!-- Sale Information -->
-        <div>
-          <div class="section-title font-bold">Sale Information</div>
+      <form [formGroup]="salesForm" (ngSubmit)="saveSale()" class="p-4 overflow-y-auto">
+          <!-- Sale Information -->
+          <div>
+            <div class="section-title font-bold">Sale Information</div>
 
-          <div class="grid grid-cols-2 gap-4 border-b py-2 pb-8">
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Sale Date
-                <span class="text-red-500">*</span>
-              </label>
-              <input type="date" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Sale Date">
-            </div>
+            <div class="grid grid-cols-2 gap-4 border-b py-2 pb-8">
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Sale Date
+                  <span class="text-red-500">*</span>
+                </label>
+                <input formControlName="saleDate" [ngClass]="{'border-red-400': isSubmitted && f.saleDate.errors}" type="date" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Sale Date">
+              </div>
 
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Revenue
-                <span class="text-red-500">*</span>
-              </label>
-              <input type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Revenue">
-            </div>
-          </div>
-        </div>
-
-
-
-        <!-- Profit, Expenses, Customers Section -->
-        <div class="py-4">
-          <div class="section-title font-bold">Sale Details</div>
-          <div class="grid grid-cols-3 gap-4 py-2 pb-4">
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Profit
-              </label>
-              <input type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Profit">
-            </div>
-
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Expenses
-              </label>
-              <input type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Expenses">
-            </div>
-
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Customers
-              </label>
-              <input type="number" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Number of Customers">
+              <!-- <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Revenue
+                  <span class="text-red-500">*</span>
+                </label>
+                <input type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Revenue">
+              </div> -->
             </div>
           </div>
-        </div>
-      </div>
 
-      <div class="flex w-full justify-between items-center gap-x-2 py-3 px-4 border-t">
-        <div>
-          <span class="text-gray-500 text-sm">Advanced settings</span>
-        </div>
-        <button (click)="saveSale()" class="p-2 bg-gray-700 text-white text-sm">
-          Save
-        </button>
-      </div>
+          <!-- Profit, Expenses, Customers Section -->
+          <div class="py-4">
+            <div class="section-title font-bold">Sale Details</div>
+            <div class="grid grid-cols-3 gap-4 py-2 pb-4">
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Product
+                </label>
+                <input formControlName="product" [ngClass]="{'border-red-400': isSubmitted && f.product.errors}" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="product">
+              </div>
+
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Quantity
+                </label>
+                <input formControlName="quantity" type="quantity" [ngClass]="{'border-red-400': isSubmitted && f.quantity.errors}" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Quantity">
+              </div>
+
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Price
+                </label>
+                <input formControlName="pricePerUnit" [ngClass]="{'border-red-400': isSubmitted && f.pricePerUnit.errors}"  type="number" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Price">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="flex w-full justify-between items-center gap-x-2 py-3 px-4 border-t">
+            <div>
+              <span class="text-gray-500 text-sm">Advanced settings</span>
+            </div>
+            <button type="submit" >
+              <p-button class="p-2 px-4 bg-gray-700 text-white text-sm" label="Save" [loading]="loading" ></p-button>
+            </button>
+          </div>
+
+      </form>
+
+
     </div>
   </div>
 </div>

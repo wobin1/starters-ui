@@ -1,3 +1,5 @@
+<p-toast/>
+
 <div class="section px-4 lg:px-16">
   <app-sub-header
     pageTitle="Purchases"
@@ -109,87 +111,93 @@
         </button>
       </div>
 
-      <div class="p-4 overflow-y-auto">
-        <!-- Purchase Information -->
-        <div>
-          <div class="section-title font-bold">Purchase Information</div>
+      <div (ngSubmit)="savePurchase()">
+        <div class="p-4 overflow-y-auto">
+          <!-- Purchase Information -->
+          <div>
+            <div class="section-title font-bold">Purchase Information</div>
 
-          <div class="grid grid-cols-2 gap-4 border-b py-2 pb-8">
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Purchase Date
-                <span class="text-red-500">*</span>
-              </label>
-              <input type="date" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Purchase Date">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 border-b py-2 pb-8">
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Purchase Date
+                  <span class="text-red-500">*</span>
+                </label>
+                <input [(ngModel)]="purchaseForm.purchaseDate" name="purchaseDate" [ngClass]="{'border-red-400': isSubmitted && purchaseForm.purchaseDate == '' }" type="date" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Purchase Date">
+              </div>
+
+              <div>
+                <label  class="block text-gray-600 text-sm font-medium">
+                  Supplier
+                  <span class="text-red-500">*</span>
+                </label>
+                <select [(ngModel)]="purchaseForm.supplier" name="supplier"   [ngClass]="{'border-red-400': isSubmitted && purchaseForm.supplier== '' }" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
+                  <option value="">Select Unit</option>
+
+                  <option *ngFor="let supplier of suppliers">{{supplier.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Items Section -->
+          <div class="py-4 mt-4">
+            <div class="section-title font-bold">Items</div>
+
+            <div *ngFor="let item of purchaseItems; let i = index" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 border-b py-2 pb-4">
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Product
+                  <span class="text-red-500">*</span>
+                </label>
+                <input [(ngModel)]="item.product" [ngClass]="{'border-red-400': isSubmitted && purchaseItems[0].product == '' }" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Product Name">
+              </div>
+
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Quantity
+                  <span class="text-red-500">*</span>
+                </label>
+                <input  [(ngModel)]="item.quantity" [ngClass]="{'border-red-400': isSubmitted && purchaseItems[0].quantity == null }" type="number" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Quantity">
+              </div>
+
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Price Per Unit
+                  <span class="text-red-500">*</span>
+                </label>
+                <input [(ngModel)]="item.pricePerUnit" [ngClass]="{'border-red-400': isSubmitted && purchaseItems[0].pricePerUnit == null }" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Price">
+              </div>
             </div>
 
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Supplier
-                <span class="text-red-500">*</span>
-              </label>
-              <input type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Supplier Name">
+            <button (click)="addItem()" class="mt-2 p-2 bg-gray-700 text-white text-sm">
+              Add Item
+            </button>
+          </div>
+
+          <!-- Total Cost Section -->
+          <div class="py-4">
+            <div class="section-title font-bold">Total Cost</div>
+            <div class="grid grid-cols-2 gap-4 py-2 pb-4">
+              <div>
+                <label class="block text-gray-600 text-sm font-medium">
+                  Total
+                </label>
+
+                <input value="{{calculateTotalCost()}}" type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Total Cost" readonly>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Items Section -->
-        <div class="py-4 mt-4">
-          <div class="section-title font-bold">Items</div>
-
-          <div *ngFor="let item of purchaseItems; let i = index" class="grid grid-cols-3 gap-4 border-b py-2 pb-4">
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Product
-                <span class="text-red-500">*</span>
-              </label>
-              <input [(ngModel)]="item.product" type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Product Name">
-            </div>
-
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Quantity
-                <span class="text-red-500">*</span>
-              </label>
-              <input [(ngModel)]="item.quantity" type="number" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Quantity">
-            </div>
-
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Price Per Unit
-                <span class="text-red-500">*</span>
-              </label>
-              <input [(ngModel)]="item.pricePerUnit" type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Price">
-            </div>
+        <div class="flex w-full justify-between items-center gap-x-2 py-3 px-4 border-t">
+          <div>
+            <span class="text-gray-500 text-sm">Advanced settings</span>
           </div>
-
-          <button (click)="addItem()" class="mt-2 p-2 bg-gray-700 text-white text-sm">
-            Add Item
+          <button type="submit" (click)="savePurchase()" >
+            <p-button class="p-2 px-4 bg-gray-700 text-white text-sm" label="Save" [loading]="loading"></p-button>
           </button>
         </div>
-
-        <!-- Total Cost Section -->
-        <div class="py-4">
-          <div class="section-title font-bold">Total Cost</div>
-          <div class="grid grid-cols-2 gap-4 py-2 pb-4">
-            <div>
-              <label class="block text-gray-600 text-sm font-medium">
-                Total
-              </label>
-
-              <input value="{{calculateTotalCost()}}" type="text" class="block w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Total Cost" readonly>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex w-full justify-between items-center gap-x-2 py-3 px-4 border-t">
-        <div>
-          <span class="text-gray-500 text-sm">Advanced settings</span>
-        </div>
-        <button (click)="savePurchase()" class="p-2 bg-gray-700 text-white text-sm">
-          Save
-        </button>
       </div>
     </div>
   </div>

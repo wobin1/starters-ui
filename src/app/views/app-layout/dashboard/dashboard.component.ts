@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-
+    responsiveOptions: any[] | undefined;
     data: any;
     options: any;
     products = [
