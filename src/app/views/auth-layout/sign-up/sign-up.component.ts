@@ -46,10 +46,12 @@ export class SignUpComponent {
     this.auth.signup(this.registrationForm.value).subscribe(
       res=> {
         console.log(res);
+        this.showSuccess('User created successfully')
         this.router.navigate(['/auth/login']);
 
       },
       err=> {
+        this.showError('An error occurred please try again')
         console.log(err)
       }
     );

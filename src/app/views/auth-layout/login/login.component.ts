@@ -55,6 +55,7 @@ export class LoginComponent {
       },
       (err) => {
         console.error(err);
+        this.showError('Invalid email or password!')
         this.loading = false;
       }
     );
