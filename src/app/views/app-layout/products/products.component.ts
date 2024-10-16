@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ProductService } from '../../../services/product.service';
@@ -13,31 +14,7 @@ export class ProductsComponent {
   isSubmitted: boolean = false;
   currentWareHouseId!: string;
   isCreateProduct: boolean = false;
-  wareHouses = [
-    {
-      "id": "1",
-      "name": "Warehouse A",
-      "address": "No 2 B Close off 11 crescent, Kado | Cold Room",
-      "productCount": "80",
-      "itemCount": "9000"
-    },
-
-    {
-      "id": "2",
-      "name": "Warehouse B",
-      "address": "No 6 C Close off 11 crescent, Qwarinpa | Cold Room",
-      "productCount": "30",
-      "itemCount": "11,000"
-    },
-
-    {
-      "id": "3",
-      "name": "Warehouse C",
-      "address": "No 2 H Close off 11 crescent, Garki | Cold Room",
-      "productCount": "50",
-      "itemCount": "31,000"
-    }
-  ]
+  wareHouses:any = []
 
   products:any = [];
 
@@ -45,6 +22,7 @@ export class ProductsComponent {
 
   ngOnInit(){
     this.products = this.productService.getProducts()
+    this.wareHouses = this.productService.getWareHouses()
   }
 
   toggleWareHouse(id:string){
@@ -54,6 +32,11 @@ export class ProductsComponent {
 
   toggleCreateProduct(){
     this.isCreateProduct =!this.isCreateProduct;
+  }
+
+  getProducts(warehouseId:number){
+    let products = this.products.filter((product:any)=>{return product.warehouseId == warehouseId})
+    return products
   }
 
   saveProduct(){

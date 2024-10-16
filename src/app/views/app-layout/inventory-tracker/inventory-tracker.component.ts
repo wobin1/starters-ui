@@ -1,5 +1,6 @@
 import { MessageService } from 'primeng/api';
 import { Component } from '@angular/core';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-inventory-tracker',
@@ -11,6 +12,10 @@ export class InventoryTrackerComponent {
   isWareHouse: boolean = false;
   currentWareHouseId!: string;
   isCreateProduct: boolean = false;
+  products:any = []
+  availableProducts:any = []
+  unavailableProducts:any = []
+
   itemType = [
     {
       "id": "1",
@@ -35,83 +40,25 @@ export class InventoryTrackerComponent {
       "productCount": "50",
     }
   ]
-  wareHouses = [
-    {
-      "id": "1",
-      "name": "Warehouse A",
-      "address": "No 2 B Close off 11 crescent, Kado | Cold Room",
-      "productCount": "80",
-      "itemCount": "9000"
-    },
-
-    {
-      "id": "2",
-      "name": "Warehouse B",
-      "address": "No 6 C Close off 11 crescent, Qwarinpa | Cold Room",
-      "productCount": "30",
-      "itemCount": "11,000"
-    },
-
-    {
-      "id": "3",
-      "name": "Warehouse C",
-      "address": "No 2 H Close off 11 crescent, Garki | Cold Room",
-      "productCount": "50",
-      "itemCount": "31,000"
-    }
-  ]
-
-  constructor(private messageService: MessageService){}
-
   tableHeader = ['Name', 'Location', 'Inventory date', 'status', 'progress bar']
 
-  products = [
-    {
-      "stockLevel": "Fresh Food Stock Level",
-      "warehouse": "Warehouse A",
-      "date": "Nov 23, 2023",
-      "status": "Available",
-      "quantity": 1,
-      "editIcon": "assets/icons/edit.svg",
-      "deleteIcon": "assets/icons/delete.svg"
-    },
-    {
-      "stockLevel": "Perishable Goods Stock Level",
-      "warehouse": "Warehouse B",
-      "date": "Nov 25, 2023",
-      "status": "Available",
-      "quantity": 1,
-      "editIcon": "assets/icons/edit.svg",
-      "deleteIcon": "assets/icons/delete.svg"
-    },
-    {
-      "stockLevel": "Presidential Dinner Stock Items",
-      "warehouse": "Warehouse A",
-      "date": "Nov 23, 2023",
-      "status": "Available",
-      "quantity": "All products",
-      "editIcon": "assets/icons/edit.svg",
-      "deleteIcon": "assets/icons/delete.svg"
-    },
-    {
-      "stockLevel": "Cold Room Stock Level",
-      "warehouse": "Warehouse B",
-      "date": "Nov 23, 2023",
-      "status": "Available",
-      "quantity": "All products",
-      "editIcon": "assets/icons/edit.svg",
-      "deleteIcon": "assets/icons/delete.svg"
-    },
-    {
-      "stockLevel": "Event XYZ Stock Items",
-      "warehouse": "Warehouse A",
-      "date": "Nov 23, 2023",
-      "status": "Available",
-      "quantity": 5,
-      "editIcon": "assets/icons/edit.svg",
-      "deleteIcon": "assets/icons/delete.svg"
-    }
-  ]
+
+  constructor(private messageService: MessageService,
+              private productService: ProductService
+              ){}
+
+  ngOnInit(){
+    // this.products = this.productService.getProducts()
+    this.availableProducts = this.productService.getAvailableProducts()
+    this.unavailableProducts = this.productService.getUnavailableProducts()
+  }
+
+  getWareHouse(warehouseId:number){
+    let wareHouse = this.productService.getWareHouse(warehouseId)
+    console.log('warehouse', wareHouse)
+    return wareHouse[0].name
+
+  }
 
   toggleWareHouse(id:string){
     this.isWareHouse =!this.isWareHouse;
@@ -121,6 +68,8 @@ export class InventoryTrackerComponent {
   toggleCreateProduct(){
     this.isCreateProduct =!this.isCreateProduct;
   }
+
+
 
   saveProduct(){
 
