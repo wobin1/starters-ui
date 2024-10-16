@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators} from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss'
+  styleUrl: './sign-up.component.scss',
+  providers: [MessageService]  // Add MessageService to the component's providers array
 })
 export class SignUpComponent {
   registrationForm: any;
@@ -17,7 +19,8 @@ export class SignUpComponent {
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ){}
 
   ngOnInit(){
@@ -43,6 +46,8 @@ export class SignUpComponent {
     this.auth.signup(this.registrationForm.value).subscribe(
       res=> {
         console.log(res);
+        this.router.navigate(['/app/dashboard']);
+
       },
       err=> {
         console.log(err)
@@ -53,6 +58,15 @@ export class SignUpComponent {
 
   viewPassword(){
     this.hidePassword =!this.hidePassword;
+  }
+
+  showSuccess(message:string) {
+    console.log(message);
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+  }
+
+  showError(message:string) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 
 }

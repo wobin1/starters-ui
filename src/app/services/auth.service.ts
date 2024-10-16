@@ -13,7 +13,7 @@ export class AuthService {
 
 
   signup(data:any){
-    return this.http.post(this.baseUrl + 'auth/register', data).pipe(
+    return this.http.post(this.baseUrl + 'users', data).pipe(
       retry(3)
     )
   }

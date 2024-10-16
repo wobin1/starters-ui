@@ -45,24 +45,19 @@ export class LoginComponent {
     formData.set('username', this.loginForm.get('email')?.value);
     formData.set('password', this.loginForm.get('password')?.value);
 
-    this.showSuccess('login successful')
+    this.auth.login(formData).subscribe(
+      (res) => {
+        console.log(res);
+        this.loading = false;
+        this.showSuccess('login successfull!')
+        this.router.navigate(['/app/dashboard']);
 
-
-    // this.auth.login(formData).subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //     this.loading = false;
-    //     this.router.navigate(['/app/home']);
-    //   },
-    //   (err) => {
-    //     console.error(err);
-    //     this.loading = false;
-    //   }
-    // );
-
-    setTimeout(() => {
-      this.router.navigate(['/app/dashboard']);
-    }, 1000)
+      },
+      (err) => {
+        console.error(err);
+        this.loading = false;
+      }
+    );
   }
 
   viewPassword(){
