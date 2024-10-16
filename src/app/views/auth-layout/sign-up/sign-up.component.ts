@@ -46,7 +46,7 @@ export class SignUpComponent {
     this.auth.signup(this.registrationForm.value).subscribe(
       res=> {
         console.log(res);
-        this.router.navigate(['/app/dashboard']);
+        this.router.navigate(['/auth/login']);
 
       },
       err=> {
