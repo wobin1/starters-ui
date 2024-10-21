@@ -9,8 +9,8 @@
 
 
     <form [formGroup]="registrationForm" autocomplete="off" (ngSubmit)="register()" class="mt-16 flex flex-col gap-4">
-      <div [ngClass]="{'border-red-400': isSubmitted && f.full_name.errors}" class="fullName  px-4 flex items-center border rounded-md gap-2">
-        <input formControlName="full_name" type="text" class="w-full capitalize py-4 lg:py-3 text-sm rounded-md bg-transparent outline-none" placeholder="Full name">
+      <div [ngClass]="{'border-red-400': isSubmitted && f.name.errors}" class="fullName  px-4 flex items-center border rounded-md gap-2">
+        <input formControlName="name" type="text" class="w-full capitalize py-4 lg:py-3 text-sm rounded-md bg-transparent outline-none" placeholder="Full name">
       </div>
 
       <div [ngClass]="{'border-red-400': isSubmitted && f.email.errors}" class="email  px-4 flex items-center border rounded-md gap-2">

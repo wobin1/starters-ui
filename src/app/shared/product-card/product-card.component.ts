@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 export class ProductCardComponent {
   @Input() productName!: string;
   @Input() amountSold!: any;
+  @Input() image:any =null;
 
 }

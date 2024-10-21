@@ -2,6 +2,8 @@ import { filter } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ProductService } from '../../../services/product.service';
+import { HttpServiceService } from '../../../services/http-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -18,11 +20,14 @@ export class ProductsComponent {
 
   products:any = [];
 
-  constructor(private messageService: MessageService, private productService: ProductService){}
+  constructor(private messageService: MessageService,
+              private productService: ProductService,
+              private api:HttpServiceService,
+              private router:Router){}
 
   ngOnInit(){
-    this.products = this.productService.getProducts()
-    this.wareHouses = this.productService.getWareHouses()
+    this.getProducts()
+    this.getWarehouses()
   }
 
   toggleWareHouse(id:string){
@@ -34,8 +39,26 @@ export class ProductsComponent {
     this.isCreateProduct =!this.isCreateProduct;
   }
 
-  getProducts(warehouseId:number){
-    let products = this.products.filter((product:any)=>{return product.warehouseId == warehouseId})
+  getWarehouses(){
+    this.api.get('warehouses').subscribe(
+      res=>{
+        this.wareHouses = res
+        this.wareHouses = this.wareHouses.data
+      }
+    )
+  }
+
+  getProducts(){
+    this.api.get('products').subscribe(
+      res =>{
+        this.products = res
+        this.products = this.products.data
+      }
+    )
+  }
+
+  getWarehouseProducts(warehouseId:number){
+    let products = this.products.filter((product:any)=>{return product.warehouse_id == warehouseId})
     return products
   }
 
@@ -54,6 +77,10 @@ export class ProductsComponent {
 
   showError(message: string) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
+  }
+
+  routeToDetail(id:any){
+    this.router.navigateByUrl('/app/product/' + id)
   }
 
 }

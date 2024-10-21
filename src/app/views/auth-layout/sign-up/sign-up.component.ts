@@ -25,7 +25,7 @@ export class SignUpComponent {
 
   ngOnInit(){
     this.registrationForm = this.fb.group({
-      full_name: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     })
@@ -48,11 +48,14 @@ export class SignUpComponent {
         console.log(res);
         this.showSuccess('User created successfully')
         this.router.navigate(['/auth/login']);
+        this.loading = false;
 
       },
       err=> {
         this.showError('An error occurred please try again')
         console.log(err)
+        this.loading = false;
+
       }
     );
   }

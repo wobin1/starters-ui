@@ -1,6 +1,8 @@
 <div class="border  w-full ">
   <div class="image">
-    <img src="assets/images/image.png" class="object-cover w-full" alt="">
+    <img loading="lazy" src={{image}} class="object-cover w-full" alt="">
+    <img *ngIf="image==null" loading="lazy" loading="lazy" src='assets/images/image.png' class="object-cover w-full" alt="">
+
   </div>
 
   <div class="bg-white flex justify-start flex-col p-4">

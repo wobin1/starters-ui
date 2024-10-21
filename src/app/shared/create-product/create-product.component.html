@@ -41,7 +41,9 @@
                 <select [ngClass]="{'border-red-400': isSubmitted && f.warehouse.errors}" formControlName="warehouse" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
                   <option value="">Select Warehouse</option>
                   <!-- dynamically fetched categories -->
-                  <option *ngFor="let warehouse of wareHouses">{{warehouse.name}}</option>
+                  <ng-container *ngFor="let warehouse of wareHouses">
+                    <option value={{warehouse.id}} >{{warehouse.name}}</option>
+                  </ng-container>
                 </select>
               </div>
 
@@ -50,7 +52,13 @@
                   Vendor
                   <span class="text-red-500">*</span>
                 </label>
-                <input [ngClass]="{'border-red-400': isSubmitted && f.vendor.errors}" formControlName="vendor" type="text" class="block border w-full px-3 py-2 bg-gray-100  focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Vendor">
+                <select formControlName="vendor" [ngClass]="{'border-red-400': isSubmitted && f.vendor.errors}" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
+                  <option value="">Select Vendor</option>
+                  <!-- dynamically fetched categories -->
+                   <ng-container *ngFor="let vendor of vendors?.data">
+                     <option value={{vendor.id}} >{{vendor.name}}</option>
+                   </ng-container>
+                </select>
               </div>
 
               <div>
@@ -85,8 +93,9 @@
             <div class="section-title font-bold">Media  <span class="text-sm">(Images, video)</span></div>
 
             <div class="mt-4 flex gap-4">
-              <div [ngClass]="{'border-red-400': isSubmitted && f.image.errors}" class="p-6 w-[120px] border border-dashed ">
-                <img src="assets/images/image.png" alt="">
+              <div [ngClass]="{'border-red-400': isSubmitted && f.image.errors}" class="p-6 w-[150px] border border-dashed ">
+                <img *ngIf="!imageSrc" src="assets/images/image.png" alt="">
+                <img *ngIf="imageSrc" src={{imageSrc}} class="h-[60px]" alt="">
               </div>
 
               <label  for="productImage" class="p-4 w-[120px] border border-dashed flex items-center justify-center">
@@ -98,7 +107,7 @@
               </label>
             </div>
 
-            <input formControlName="image" id="productImage" type="file" class="hidden">
+            <input formControlName="image" id="productImage" type="file"  (change)="onFileSelected($event)" class="hidden">
 
           </div>
 
@@ -119,22 +128,22 @@
 
               <div class="flex gap-4">
 
-                <div class="">
+                <!-- <div class="">
                   <label class="block text-gray-600 text-sm font-medium">
                     Profit
                     <span class="text-red-500">*</span>
                   </label>
 
                     <input formControlName="profit" [ngClass]="{'border-red-400': isSubmitted && f.profit.errors}" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Profit">
-                </div>
+                </div> -->
 
-                <div>
+                <!-- <div>
                   <label class="block text-gray-600 text-sm font-medium">
                     Margin
                     <span class="text-red-500">*</span>
                   </label>
                   <input formControlName="margin" [ngClass]="{'border-red-400': isSubmitted && f.margin.errors}" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Margin">
-                </div>
+                </div> -->
 
               </div>
 
@@ -167,7 +176,9 @@
                   <select formControlName="unit" [ngClass]="{'border-red-400': isSubmitted && f.image.errors}" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
                     <option value="">Select Unit</option>
                     <!-- dynamically fetched categories -->
-                    <option *ngFor="let warehouse of wareHouses">{{warehouse.name}}</option>
+                     <ng-container *ngFor="let unit of units?.data">
+                       <option value={{unit.id}} >{{unit.name}}</option>
+                     </ng-container>
                   </select>
                 </div>
 

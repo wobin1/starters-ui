@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,27 +9,40 @@ import { environment } from '../../environments/environment';
 export class HttpServiceService {
 
   baseUrl: string = environment.baseUrl
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
+
+  private getHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${this.authService.getJwtToken()}`,
+      })
+    };
+  }
 
 
   post(endpoint:string, data:any){
-    return this.http.post(this.baseUrl + endpoint, data)
+    const httpOptions = this.getHttpOptions();
+    return this.http.post(this.baseUrl + endpoint, data, this.getHttpOptions())
   }
 
   get(endpoint:string){
-    return this.http.get(this.baseUrl + endpoint)
+    const httpOptions = this.getHttpOptions();
+    return this.http.get(this.baseUrl + endpoint, httpOptions)
   }
 
   update(endpoint:string, data:any){
-    return this.http.put(this.baseUrl + endpoint, data)
+    const httpOptions = this.getHttpOptions();
+    return this.http.put(this.baseUrl + endpoint, data, httpOptions)
   }
 
   delete(endpoint:string){
-    return this.http.delete(this.baseUrl + endpoint)
+    const httpOptions = this.getHttpOptions();
+    return this.http.delete(this.baseUrl + endpoint, httpOptions)
   }
 
   patch(endpoint:string){
-    return this.http.patch(this.baseUrl + endpoint, null)
+    const httpOptions = this.getHttpOptions();
+    return this.http.patch(this.baseUrl + endpoint, httpOptions)
   }
 
 }

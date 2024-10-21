@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +10,11 @@ import { retry } from 'rxjs';
 export class AuthService {
 
   baseUrl: string = environment.baseUrl
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storage: StorageService) { }
 
 
   signup(data:any){
-    return this.http.post(this.baseUrl + 'users', data).pipe(
+    return this.http.post(this.baseUrl + 'auth/register', data).pipe(
       retry(3)
     )
   }
@@ -29,4 +30,10 @@ export class AuthService {
       retry(3)
     )
   }
+
+  getJwtToken(){
+    return this.storage.getdata('jwt_token')
+  }
+
+
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { HttpServiceService } from '../../../../services/http-service.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,65 +18,11 @@ export class ProductDetailComponent {
   isWareHouse:boolean = false;
   isProductUpdated: boolean = false;
   updateQuantityForm!:any;
-  images: any[] = [
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 1',
-        title: 'Title 1'
-    },
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 2',
-        title: 'Title 2'
-    },
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 3',
-        title: 'Title 3'
-    },
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 4',
-        title: 'Title 4'
-    },
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 5',
-        title: 'Title 5'
-    },
+  productId:any;
+  productDetail:any =null;
+  images:any;
+  wareHouses:any;
 
-];
-
-wareHouses = [
-  {
-    "id": "1",
-    "name": "Warehouse A",
-    "address": "No 2 B Close off 11 crescent, Kado | Cold Room",
-    "productCount": "80",
-    "itemCount": "9000"
-  },
-
-  {
-    "id": "2",
-    "name": "Warehouse B",
-    "address": "No 6 C Close off 11 crescent, Qwarinpa | Cold Room",
-    "productCount": "30",
-    "itemCount": "11,000"
-  },
-
-  {
-    "id": "3",
-    "name": "Warehouse C",
-    "address": "No 2 H Close off 11 crescent, Garki | Cold Room",
-    "productCount": "50",
-    "itemCount": "31,000"
-  }
-]
 
 updatedQuantityData = [
   {
@@ -109,7 +56,8 @@ updatedQuantityData = [
 
   constructor(private router: Router,
               private fb: FormBuilder,
-              private messageService: MessageService){}
+              private messageService: MessageService,
+              private api:HttpServiceService){}
 
 
 
@@ -137,6 +85,9 @@ updatedQuantityData = [
           note: ['', [Validators.required]],
           // ... other fields
         });
+
+
+        this.getProduct(this.getProductId())
     }
 
   route(){
@@ -145,7 +96,34 @@ updatedQuantityData = [
   }
 
 
+  getProductId(){
+    const url = window.location.href;
+    const segments = url.split('/');
+    this.productId = segments[segments.length - 1];
+  }
 
+  getProduct(id:any){
+    this.api.get('products/' + this.productId).subscribe(
+      res=>{
+        console.log(res);
+        this.productDetail = res;
+        this.images = this.productDetail.data.media
+        console.log('images', this.images);
+      },
+      err=>{
+        console.log(err);
+      }
+    )
+  }
+
+  getWarehouses(){
+    this.api.get('warehouses').subscribe(
+      res=>{
+        this.wareHouses = res
+        this.wareHouses = this.wareHouses.data
+      }
+    )
+  }
 
 
   toggleUpdatedProduct(){

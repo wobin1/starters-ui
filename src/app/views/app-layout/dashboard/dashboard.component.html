@@ -17,7 +17,10 @@
         <div class="flex flex-col gap-2 bg-white px-6 py-6 basis-1/2">
           <span class="text-sm text-gray-600">Total items</span>
           <div class="flex justify-between items-center">
-            <span class="text-xl font-bold text-gray-800">1,345</span>
+            <span *ngIf="metrics==null">
+              <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+              </span>
+            <span class="text-xl font-bold text-gray-800">{{metrics?.data?.total_items}}</span>
             <span class="text-xs cursor-pointer hover:text-gray-500 active:scale-95 text-gray-600 flex items-center gap-2">
               view detail
               <span>
@@ -30,9 +33,12 @@
         </div>
 
         <div class="flex flex-col gap-2 bg-white px-6 py-6 basis-1/2">
-          <span class="text-sm text-gray-600">Total items</span>
+          <span class="text-sm text-gray-600">Low stock alert</span>
           <div class="flex justify-between items-center">
-            <span class="text-xl font-bold text-gray-800">1,345</span>
+            <span *ngIf="metrics==null">
+              <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+              </span>
+            <span class="text-xl font-bold text-gray-800">{{metrics?.data?.total_items}}</span>
             <span class="text-xs cursor-pointer hover:text-gray-500 active:scale-95 text-gray-600 flex items-center gap-2">
               view detail
               <span>
@@ -54,9 +60,12 @@
 
       <div class="flex gap-4 mt-4 lg:flex-row md:flex-col flex-col">
         <div class="flex flex-col gap-2 bg-white px-6 py-6 basis-1/2">
-          <span class="text-sm text-gray-600">Total items</span>
+          <span class="text-sm text-gray-600">To be delivered</span>
           <div class="flex justify-between items-center">
-            <span class="text-xl font-bold text-gray-800">1,345</span>
+            <span *ngIf="metrics==null">
+              <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+              </span>
+            <span class="text-xl font-bold text-gray-800">{{metrics?.data?.total_to_be_delivered}}</span>
             <span class="text-xs cursor-pointer hover:text-gray-500 active:scale-95 text-gray-600 flex items-center gap-2">
               view detail
               <span>
@@ -69,9 +78,12 @@
         </div>
 
         <div class="flex flex-col gap-2 bg-white px-6 py-6 basis-1/2">
-          <span class="text-sm text-gray-600">Total items</span>
+          <span class="text-sm text-gray-600">To be ordered</span>
           <div class="flex justify-between items-center">
-            <span class="text-xl font-bold text-gray-800">1,345</span>
+            <span *ngIf="metrics==null">
+              <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+              </span>
+            <span class="text-xl font-bold text-gray-800">{{metrics?.data?.total_to_be_ordered}}</span>
             <span class="text-xs cursor-pointer hover:text-gray-500 active:scale-95 text-gray-600 flex items-center gap-2">
               view detail
               <span>
@@ -136,7 +148,12 @@
 
         <div class="absolute flex flex-col items-center">
           <span class="label">Total items</span>
-          <span class="label font-bold text-2xl">1,350</span>
+          <span class="label font-bold text-2xl">
+            <span >
+            <i *ngIf="!warehouseDetail" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+            </span>
+            {{warehouseDetail?.data?.total_items}}
+          </span>
         </div>
 
       </div>
@@ -150,7 +167,10 @@
               <span class="text-gray-500">Cold room</span>
             </div>
 
-            <span class="text-gray-800">1,000 items</span>
+            <span class="text-gray-800">{{warehouseDetail?.data?.cold_room}} items</span>
+            <span >
+              <i *ngIf="!warehouseDetail" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+              </span>
           </div>
 
           <div class="flex justify-between ">
@@ -159,7 +179,10 @@
               <span class="text-gray-500">Kitchen</span>
             </div>
 
-            <span class="text-gray-800">345 items</span>
+            <span class="text-gray-800">{{warehouseDetail?.data?.kitchen}}</span>
+            <span >
+              <i *ngIf="!warehouseDetail" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+              </span>
           </div>
 
         </div>
@@ -177,8 +200,8 @@
       <h4 class="text-lg font-medium text-gray-800">Top Selling Products</h4>
 
       <div class="products grid md:grid lg:grid md:grid-cols-2 lg:grid-cols-4 gap-4 w-full mt-8">
-        <ng-container *ngFor="let item of products">
-        <app-product-card productName={{item.name}} amountSold={{item.amountSold}}></app-product-card>
+        <ng-container *ngFor="let item of TopSellingProduct?.data">
+        <app-product-card productName={{item.name}} amountSold={{item.total_items_sold}} image={{item.media}}></app-product-card>
         </ng-container>
       </div>
 

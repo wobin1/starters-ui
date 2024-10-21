@@ -52,9 +52,9 @@
 
       <!-- products -->
        <div *ngIf="isWareHouse && currentWareHouseId===item.id" class="py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 ">
-        <ng-container *ngFor="let item of getProducts(item.id)">
-          <button routerLink="/app/product/2">
-            <app-product-card productName={{item.name}} amountSold={{item.amountSold}}></app-product-card>
+        <ng-container *ngFor="let item of getWarehouseProducts(item.id)">
+          <button (click)="routeToDetail(item.id)">
+            <app-product-card productName={{item.name}} amountSold={{item.amountSold}} image={{item.media[0]}}></app-product-card>
 
           </button>
         </ng-container>

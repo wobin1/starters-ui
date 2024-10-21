@@ -15,7 +15,7 @@
     <div class="side1 basis-[45%]">
       <div class="card flex justify-center">
         <p-galleria
-          [value]="images"
+          [value]="productDetail?.data.media"
           [responsiveOptions]="responsiveOptions"
           [containerStyle]="{ 'max-width': '640px' }"
           [numVisible]="5">
@@ -47,11 +47,32 @@
       <div class="cards w-full">
         <div class="layout-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
 
-          <ng-container *ngFor="let item of cards">
+          <ng-container>
             <div class="flex flex-col gap-2 bg-white px-6 py-6 w-full">
-              <span class="text-sm text-gray-600">{{item.title}}</span>
+              <span class="text-sm text-gray-600">On hand</span>
               <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-gray-800">{{item.figure}}</span>
+                <span *ngIf="productDetail==null">
+                  <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+                  </span>
+                <span class="text-lg font-bold text-gray-800">{{productDetail?.data.on_hand}}</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 bg-white px-6 py-6 w-full">
+              <span class="text-sm text-gray-600">To be delivered</span>
+              <div class="flex justify-between items-center">
+                <span *ngIf="productDetail==null">
+                  <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+                  </span>
+                <span class="text-lg font-bold text-gray-800">{{productDetail?.data.to_be_delivered}}</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 bg-white px-6 py-6 w-full">
+              <span class="text-sm text-gray-600">To be ordered</span>
+              <div class="flex justify-between items-center">
+                <span *ngIf="productDetail==null">
+                  <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+                  </span>
+                <span class="text-lg font-bold text-gray-800">{{productDetail?.data.to_be_ordered}}</span>
               </div>
             </div>
           </ng-container>
@@ -76,14 +97,14 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 my-2 gap-4">
             <div class="flex flex-col gap-1 ">
-              <p class="text-sm text-gray-500"><span class=" text-gray-800">Product name:</span> Fish in Batter</p>
-              <p class="text-sm text-gray-500"><span class=" text-gray-800">Top Vendor:</span> Mrs. Abubakar Global</p>
-              <p class="text-sm text-gray-500"><span class=" text-gray-800">SKU:</span > -</p>
+              <p class="text-sm text-gray-500"><span class=" text-gray-800">Product name:</span> {{productDetail?.data.name}}</p>
+              <p class="text-sm text-gray-500"><span class=" text-gray-800">Top Vendor:</span> {{productDetail?.data.top_vendor}}</p>
+              <p class="text-sm text-gray-500"><span class=" text-gray-800">SKU:</span > {{productDetail?.data.sku}}</p>
             </div>
             <div class="flex flex-col gap-1 ">
-              <p class="text-sm text-gray-500"><span class="text-gray-800">Location:</span> Warehouse A</p>
-              <p class="text-sm text-gray-500"><span class="text-gray-800">Code:</span> SWE</p>
-              <p class="text-sm text-gray-500"><span class="text-gray-800">Barcode:</span> 40181700082</p>
+              <p class="text-sm text-gray-500"><span class="text-gray-800">Location:</span> {{productDetail?.data.location}}</p>
+              <p class="text-sm text-gray-500"><span class="text-gray-800">Code:</span> {{productDetail?.data.code}}</p>
+              <p class="text-sm text-gray-500"><span class="text-gray-800">Barcode:</span> {{productDetail?.data.barcode}}</p>
             </div>
           </div>
         </div>
@@ -102,13 +123,13 @@
 
           <div class="flex my-2 gap-16">
             <div>
-              <p class="text-sm text-gray-500"><span class="font-medium text-gray-800">Price:</span> ₦100.00</p>
+              <p class="text-sm text-gray-500"><span class="font-medium text-gray-800">Price:</span> ₦{{productDetail?.data.price}}</p>
             </div>
             <div>
-              <p class="text-sm text-gray-500"><span class="font-medium text-gray-800">Profit:</span> ₦50</p>
+              <p class="text-sm text-gray-500"><span class="font-medium text-gray-800">Profit:</span> ₦{{productDetail?.data.profit}}</p>
             </div>
             <div>
-              <p class="text-sm text-gray-500"><span class="font-medium text-gray-800">Margin:</span> 50%</p>
+              <p class="text-sm text-gray-500"><span class="font-medium text-gray-800">Margin:</span> {{productDetail?.data.margin}}%</p>
             </div>
           </div>
         </div>
@@ -141,13 +162,13 @@
             <div>
               <div class="text-sm flex justify-between">
                 <span class="font-medium">Quantity:</span>
-                <span class="text-gray-500">200</span>
+                <span class="text-gray-500">{{productDetail?.data.quantity}}</span>
               </div>
             </div>
             <div>
               <div class="text-sm flex justify-between">
                 <span class="font-medium">Unit:</span>
-                <span class="text-gray-500">Item</span>
+                <span class="text-gray-500">{{productDetail?.data.item}}</span>
               </div>
             </div>
 

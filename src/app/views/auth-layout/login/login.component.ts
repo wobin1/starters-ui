@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +18,13 @@ export class LoginComponent {
   loading: boolean = false;
   hidePassword: boolean = true;
   toastType!:string;
+  response:any;
 
   constructor(private auth: AuthService,
               private fb: FormBuilder,
               private router: Router,
-              private messageService: MessageService){}
+              private messageService: MessageService,
+              private storage: StorageService){}
 
   ngOnInit(){
     this.loginForm = this.fb.group({
@@ -41,14 +44,15 @@ export class LoginComponent {
       return;
     }
 
-    const formData = new FormData();
-    formData.set('username', this.loginForm.get('email')?.value);
-    formData.set('password', this.loginForm.get('password')?.value);
 
-    this.auth.login(formData).subscribe(
+
+    this.auth.login(this.loginForm.value).subscribe(
       (res) => {
         console.log(res);
         this.loading = false;
+        this.response = res;
+        this.storage.savedata('jwt_token', this.response.data.token)
+        console.log('login response', this.response.data.token)
         this.showSuccess('login successfull!')
         this.router.navigate(['/app/dashboard']);
 
@@ -59,6 +63,7 @@ export class LoginComponent {
         this.loading = false;
       }
     );
+
   }
 
   viewPassword(){
