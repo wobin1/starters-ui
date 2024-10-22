@@ -14,6 +14,7 @@ export class MonthlyInventoryComponent {
   isWareHouse:boolean = false;
   wareHousesId:any;
   warehouseInventory:any;
+  completeInventoryData:any;
   isProductUpdated: boolean = false;
   images: any[] = [
     {
@@ -204,6 +205,29 @@ export class MonthlyInventoryComponent {
         )
 
         console.log(this.updatedQuantityData)
+      },
+      err=>{
+        console.log(err);
+      }
+    )
+  }
+
+  completeInventory(){
+
+    let completeInventory:any=[];
+    for(let inventory of this.warehouseInventory.product_list){
+      completeInventory.push({'id': inventory.no, 'counted': inventory.counted})
+    }
+
+    console.log(completeInventory)
+
+    this.api.post('inventory/completed', {'products': completeInventory}).subscribe(
+      res=>{
+        console.log(res);
+        this.completeInventoryData = res;
+        this.completeInventoryData = this.completeInventoryData.data
+        console.log('completeInventoryData', this.completeInventoryData)
+        this.toggleCompleteInventry()
       },
       err=>{
         console.log(err);

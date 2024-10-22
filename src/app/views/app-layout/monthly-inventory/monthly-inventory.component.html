@@ -6,7 +6,7 @@
     pageTitle="[Monthly] augUST Inventory - Warehouse A"
     action3Name="Complete Inventory"
     icon='assets/icons/add.png'
-    buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="toggleCompleteInventry()" ></app-sub-header>
+    buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="completeInventory()" ></app-sub-header>
   </div>
 
 
@@ -27,9 +27,9 @@
         <div class="update-details w-full mt-4">
           <div class="flex flex-col gap-4 w-full ">
             <ng-container *ngFor="let item of updatedQuantityData">
-              <div class="flex justify-between text-sm">
-                <div class="label text-gray-800 font-semibold">{{item.label}}</div>
-                <div class="value text-gray-600 font-normal">{{item.value}}</div>
+              <div class="flex justify-between pr-12 text-sm">
+                <div class="label text-gray-800 font-semibold">{{item?.label}}</div>
+                <div class="value text-gray-600 font-normal">{{item?.value}}</div>
               </div>
             </ng-container>
             <div class="flex justify-between items-center">
@@ -50,8 +50,12 @@
 
           <div class="status mt-6">
             <div class="w-full ">
-              <div class="flex w-full h-1.5 bg-gray-200 overflow-hidden" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                <div class="flex flex-col justify-center overflow-hidden bg-black text-xs text-white text-center whitespace-nowrap transition duration-500" style="width: 25%"></div>
+              <div class="flex w-full h-1.5 bg-gray-200 overflow-hidden" role="progressbar"
+                  [attr.aria-valuenow]="warehouseInventory.progress"
+                  aria-valuemin="0" aria-valuemax="100">
+                <div class="flex flex-col justify-center overflow-hidden bg-black text-xs text-white text-center whitespace-nowrap transition duration-500"
+                    [style.width]="warehouseInventory.progress + '%'">
+                </div>
               </div>
             </div>
 
@@ -99,7 +103,7 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-200 bg-white">
-                    <ng-container *ngFor="let product of products">
+                    <ng-container *ngFor="let product of warehouseInventory.product_list">
                       <tr class="hover:bg-gray-100">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium  text-gray-800">
 
@@ -112,10 +116,10 @@
 
                         </td>
                         <td>
-                          <img src="assets/images/image.png" class="w-10 h-10" alt="">
+                          <img src={{product.image[0]}} class="w-10 h-10" alt="">
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.productName}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.onHand}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.product_name}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.on_hand}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                           <div class="p-1 px-2 text-gray-800">
                             {{product.counted}}
@@ -159,24 +163,41 @@
              <div class=" flex gap-2 flex-col items-center">
               <div class="title capitalize font-bold text-2xl text-gray-800"> Complete Inventory</div>
 
-              <div class="product text-lg font-bold text-gray-800">[Monthly] August Inventory - Warehouse A</div>
+              <div class="product text-lg font-bold text-gray-800">[Monthly] August Inventory - {{completeInventoryData[0].location}}</div>
              </div>
 
              <div class="update-details text-sm bg-white px-12 py-4 w-full">
 
                <div class="flex flex-col gap-4">
-                  <ng-container *ngFor="let item of updatedQuantityData">
+                  <ng-container>
+
                     <div class="flex justify-between">
-                    <div class="label text-gray-800 font-semibold">{{item.label}}</div>
-                    <div class="value text-gray-600 font-normal">{{item.value}}</div>
+                    <div class="label text-gray-800 font-semibold">Location</div>
+                    <div class="value text-gray-600 font-normal">{{completeInventoryData[0].location}}</div>
+                  </div>
+                  <div class="flex justify-between">
+                    <div class="label text-gray-800 font-semibold">Inventory Date</div>
+                    <div class="value text-gray-600 font-normal">{{completeInventoryData[0].value}}</div>
+                  </div>
+                  <div class="flex justify-between">
+                    <div class="label text-gray-800 font-semibold">Duration of Inventory</div>
+                    <div class="value text-gray-600 font-normal">{{completeInventoryData[0].value}}</div>
+                  </div>
+                  <div class="flex justify-between">
+                    <div class="label text-gray-800 font-semibold">Product</div>
+                    <div class="value text-gray-600 font-normal">{{completeInventoryData[0].total_products}}</div>
+                  </div>
+                  <div class="flex justify-between">
+                    <div class="label text-gray-800 font-semibold">Total Items Counted</div>
+                    <div class="value text-gray-600 font-normal">{{completeInventoryData[0].total_items_counted}}</div>
                   </div>
                   </ng-container>
 
                   <div class="flex justify-between">
                     <div class="label text-gray-800 font-semibold">Descripancies</div>
                     <div class="value text-gray-600  font-normal">
-                      <ng-container *ngFor="let row of descrepancies" >
-                        {{row.value}} {{row.product}} <br>
+                      <ng-container *ngFor="let row of completeInventoryData[0].total_discrepancies" >
+                        {{row.discrepancy}} {{row.product_name}} <br>
                       </ng-container>
                     </div>
                   </div>

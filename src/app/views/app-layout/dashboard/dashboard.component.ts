@@ -68,7 +68,7 @@ export class DashboardComponent {
     }
 
     getTopSellingProducts(){
-      this.api.get('dashboard/topsellingproducts?page=1&page_size=4').subscribe(
+      this.api.get('dashboard/topsellingproducts').subscribe(
         res=>{
           this.TopSellingProduct = res
           console.log(this.TopSellingProduct)
