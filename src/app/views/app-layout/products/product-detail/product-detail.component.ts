@@ -20,7 +20,7 @@ export class ProductDetailComponent {
   updateQuantityForm!:any;
   productId:any;
   productDetail:any =null;
-  units:any;
+  reasons:any;
   images:any = [
     {
         itemImageSrc: 'https://i.imgur.com/VWBa2bd.jpg',
@@ -66,7 +66,6 @@ updatedQuantityData:any = []
         this.updateQuantityForm = this.fb.group({
           // Form fields here
           new_quantity: ['', Validators.required],
-          unit: [''],
           reason: ['', [Validators.required]],
           note: [''],
           // ... other fields
@@ -74,7 +73,7 @@ updatedQuantityData:any = []
 
 
         this.getProduct(this.getProductId())
-        this.getUnits();
+        this.getUpdateReason()
     }
 
   route(){
@@ -117,6 +116,15 @@ updatedQuantityData:any = []
     this.productId = segments[segments.length - 1];
   }
 
+  getUpdateReason(){
+    return this.api.get('reasons').subscribe(
+      res =>{
+        this.reasons = res
+        this.reasons = this.reasons.data
+      }
+    )
+  }
+
   getProduct(id:any){
     this.api.get('products/' + this.productId).subscribe(
       res=>{
@@ -132,17 +140,7 @@ updatedQuantityData:any = []
     )
   }
 
-  getUnits(){
-    this.api.get('units').subscribe(
-      res=>{
-        this.units = res;
-        this.units = this.units.data
-      },
-      err=>{
-        console.log(err);
-       }
-    )
-  }
+
 
 
   getWarehouses(){

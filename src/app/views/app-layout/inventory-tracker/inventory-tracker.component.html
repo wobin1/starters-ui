@@ -1,9 +1,16 @@
-<div class="section px-4 lg:px-16">
+<div class="section relative px-4 lg:px-16">
   <app-sub-header
   pageTitle="Inventory Tracker"
-  action3Name="Create New Product"
+  action2Name="Generate monthly inventory"
+  action3Name="Create New Plan"
   icon='assets/icons/add.png'
-  buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="toggleCreateProduct()"></app-sub-header>
+  buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="toggleCreateProduct()" (action2)="toggleChooseWareHouse()"></app-sub-header>
+
+  <div *ngIf="isChooseWareHouse" class="w-full absolute right-[250px] z-[500] max-w-[200px]">
+    <ul class="border bg-gray-50 p-4" *ngFor="let warehouse of wareHouses">
+      <li (click)="route('/app/monthly-inventory/' + warehouse.id)">{{warehouse.name}}</li>
+    </ul>
+  </div>
 
   <!-- search section -->
    <div class="mt-1">
@@ -24,17 +31,11 @@
                   <h2 class="text-xl font-normal text-gray-800">{{item.name}}</h2>
                 </div>
 
-                <ng-container *ngIf="item.name=='Unavailable Items'">
-                  <span class="text-xs text-gray-500 p-1 px-4 rounded-full bg-gray-200/85">{{unavailableProducts.length}} products </span>
+                <ng-container>
+                  <span class="text-xs text-gray-500 p-1 px-4 rounded-full bg-gray-200/85">{{item.product.length}} products </span>
                 </ng-container>
 
-                <ng-container *ngIf="item.name=='Available Items'">
-                  <span class="text-xs text-gray-500 p-1 px-4 rounded-full bg-gray-200/85">{{availableProducts.length}} products </span>
-                </ng-container>
 
-                <ng-container *ngIf="item.name !== 'Available Items' && item.name !== 'Unavailable Items'">
-                  <span class="text-xs text-gray-500 p-1 px-4 rounded-full bg-gray-200/85">0 products </span>
-                </ng-container>
 
               </div>
 
@@ -74,9 +75,9 @@
                       <tbody class="divide-y divide-gray-200 bg-white">
 
                         <!-- available products -->
-                        <ng-container *ngIf="item.name === 'Available Items' ">
-                          <ng-container *ngFor="let product of availableProducts">
-                            <tr *ngIf="availableProducts.length>0" class="hover:bg-gray-100">
+                        <ng-container>
+                          <ng-container *ngFor="let product of item.product">
+                            <tr class="hover:bg-gray-100">
                               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium  text-gray-800">
 
                                   <div class="w-full flex gap-4 items-center">
@@ -85,20 +86,14 @@
                                       <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
                                     </svg>
                                     <div class="flex flex-col gap-1 text-gray-800">
-                                      <span class="text-gray-500">{{product.name}}</span>
+                                      <span class="text-gray-500">{{product.plan_name}}</span>
                                     </div>
                                   </div>
 
                               </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{getWareHouse(product.warehouseId)}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.createdOn | date}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-start text-sm font-medium">
-                                <div class="p-1 px-2 bg-gray-100 rounded-full text-gray-500 text-center">
-                                  <ng-container *ngIf="product.quantity > 0">
-                                    <span>Available</span>
-                                  </ng-container>
-                                </div>
-                              </td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.warehouse_name}}</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.plan_date | date}}</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-start text-sm font-medium">{{product.status}}</td>
                               <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                                 <div class="w-[150px] ">
                                   <div class="flex w-full h-1.5 bg-gray-200  overflow-hidden " role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
@@ -109,54 +104,13 @@
 
                             </tr>
 
-                            <tr *ngIf="availableProducts.length===0">
+                            <tr *ngIf="product.length===0">
                               <app-empty-list></app-empty-list>
                             </tr>
 
                           </ng-container>
                         </ng-container>
 
-
-                        <!-- unavailable products -->
-                        <ng-container *ngIf="item.name === 'Unavailable Items' ">
-                          <ng-container *ngFor="let product of unavailableProducts">
-                            <tr *ngIf="unavailableProducts.length>0" class="hover:bg-gray-100">
-                              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium  text-gray-800">
-
-                                  <div class="w-full flex gap-4 items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
-                                      <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
-                                      <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
-                                    </svg>
-                                    <div class="flex flex-col gap-1 text-gray-800">
-                                      <span class="text-gray-500">{{product.name}}</span>
-                                    </div>
-                                  </div>
-
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{getWareHouse(product.warehouseId)}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.createdOn | date}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-start text-sm font-medium">
-                                <div class="p-1 px-2 bg-gray-100 rounded-full text-gray-500 text-center">
-                                  <ng-container *ngIf="product.quantity > 0">
-                                    <span>Available</span>
-                                  </ng-container>
-                                </div>
-                              </td>
-                              <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                <div class="w-[150px] ">
-                                  <div class="flex w-full h-1.5 bg-gray-200  overflow-hidden " role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    <div class="flex flex-col justify-center  overflow-hidden bg-black text-xs text-white text-center whitespace-nowrap transition duration-500" style="width: 25%"></div>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-
-                            <tr *ngIf="unavailableProducts.length===0">
-                              <app-empty-list></app-empty-list>
-                            </tr>
-                          </ng-container>
-                        </ng-container>
 
                       </tbody>
                     </table>
@@ -180,8 +134,9 @@
 
 
 
-   <div *ngIf="isCreateProduct" class="product-modal">
-    <app-create-product (togleModal)="toggleCreateProduct()" (saveProduct)="saveProduct()"></app-create-product>
+   <div *ngIf="isCreatePlan" class="product-modal">
+    <!-- <app-create-product (togleModal)="toggleCreateProduct()" (saveProduct)="saveProduct()"></app-create-product> -->
+     <app-create-new-inventory-plan (togleModal)="toggleCreateProduct()"></app-create-new-inventory-plan>
   </div>
 
 </div>

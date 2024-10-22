@@ -1,5 +1,7 @@
+import { DataViewModule } from 'primeng/dataview';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpServiceService } from '../../../services/http-service.service';
 
 @Component({
   selector: 'app-monthly-inventory',
@@ -10,6 +12,8 @@ export class MonthlyInventoryComponent {
   istoggleUpdateProduct:boolean = true;
   iscompleteInventry:boolean = false;
   isWareHouse:boolean = false;
+  wareHousesId:any;
+  warehouseInventory:any;
   isProductUpdated: boolean = false;
   images: any[] = [
     {
@@ -45,55 +49,9 @@ export class MonthlyInventoryComponent {
 
 ];
 
-wareHouses = [
-  {
-    "id": "1",
-    "name": "Warehouse A",
-    "address": "No 2 B Close off 11 crescent, Kado | Cold Room",
-    "productCount": "80",
-    "itemCount": "9000"
-  },
 
-  {
-    "id": "2",
-    "name": "Warehouse B",
-    "address": "No 6 C Close off 11 crescent, Qwarinpa | Cold Room",
-    "productCount": "30",
-    "itemCount": "11,000"
-  },
 
-  {
-    "id": "3",
-    "name": "Warehouse C",
-    "address": "No 2 H Close off 11 crescent, Garki | Cold Room",
-    "productCount": "50",
-    "itemCount": "31,000"
-  }
-]
-
-  updatedQuantityData = [
-    {
-      "label": "Location",
-      "value": "Warehouse A"
-    },
-    {
-      "label": "Inventory Date",
-      "value": "August 3, 2023"
-    },
-    {
-      "label": "Duration of Inventory",
-      "value": "10 days"
-    },
-    {
-      "label": "Product",
-      "value": "All (50 products)"
-    },
-    {
-      "label": "Total Items Counted",
-      "value": "200 items"
-    },
-
-  ]
+  updatedQuantityData:any = []
 
   descrepancies =   [
       {
@@ -195,14 +153,63 @@ wareHouses = [
       "difference": 2
     }
   ]
-  constructor(private router: Router){}
+  constructor(private router: Router, private api:HttpServiceService){}
+
+  ngOnInit(){
+    this.getWareHouseId();
+    this.getWarehouseInventory();
+  }
 
   route(){
     this.router.navigateByUrl('/app/product')
     console.log('router click')
   }
 
+  getWareHouseId(){
+    const url = window.location.href;
+    const segments = url.split('/');
+    this.wareHousesId = segments[segments.length - 1];
+  }
 
+  getWarehouseInventory(){
+    this.api.get('warehouses/inventory/' + this.wareHousesId).subscribe(
+      res=>{
+        console.log(res);
+        this.warehouseInventory = res;
+        this.warehouseInventory = this.warehouseInventory.data
+
+        console.log('warehouseInventory', this.warehouseInventory)
+
+        this.updatedQuantityData.push(
+          {
+            "label": "Location",
+            "value": this.warehouseInventory?.location
+          },
+          {
+            "label": "Inventory Date",
+            "value": "August 3, 2023"
+          },
+          {
+            "label": "Duration of Inventory",
+            "value": "10 days"
+          },
+          {
+            "label": "Product",
+            "value": this.warehouseInventory?.total_products
+          },
+          {
+            "label": "Total Items Counted",
+            "value": 200
+          }
+        )
+
+        console.log(this.updatedQuantityData)
+      },
+      err=>{
+        console.log(err);
+      }
+    )
+  }
 
   toggleCompleteInventry(){
     this.iscompleteInventry =!this.iscompleteInventry;

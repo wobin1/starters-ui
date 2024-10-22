@@ -9,7 +9,7 @@ import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
 import { CarouselModule } from 'primeng/carousel';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 
@@ -22,7 +22,8 @@ const primeNG: any = [
   GalleriaModule,
   ImageModule,
   CarouselModule,
-  ProgressSpinnerModule
+  ProgressSpinnerModule,
+  MultiSelectModule
 ]
 
 

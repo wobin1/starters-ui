@@ -9,6 +9,8 @@
     buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="toggleCompleteInventry()" ></app-sub-header>
   </div>
 
+
+
     <!-- Layout section -->
     <div class="section border flex bg-gray-100">
       <div class="layout1 border px-8 py-6 basis-[30%] min-w-0 flex-shrink-0">
@@ -23,7 +25,7 @@
         </div>
 
         <div class="update-details w-full mt-4">
-          <div class="flex flex-col gap-4 w-full max-w-[250px]">
+          <div class="flex flex-col gap-4 w-full ">
             <ng-container *ngFor="let item of updatedQuantityData">
               <div class="flex justify-between text-sm">
                 <div class="label text-gray-800 font-semibold">{{item.label}}</div>

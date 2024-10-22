@@ -28,6 +28,7 @@ export class ProductsComponent {
   ngOnInit(){
     this.getProducts()
     this.getWarehouses()
+
   }
 
   toggleWareHouse(id:string){
@@ -58,6 +59,8 @@ export class ProductsComponent {
 
 
   }
+
+
 
   getWarehouseProducts(warehouseId:number){
     let products = this.products.filter((product:any)=>{return product.warehouse_id == warehouseId})

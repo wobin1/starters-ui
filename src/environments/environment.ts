@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  baseUrl: 'http://starters.hordun.software/'
+  baseUrl: 'https://starters.hordun.software/'
 };
 
 

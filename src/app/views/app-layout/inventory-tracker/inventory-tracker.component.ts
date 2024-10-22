@@ -1,6 +1,8 @@
 import { MessageService } from 'primeng/api';
 import { Component } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
+import { HttpServiceService } from '../../../services/http-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventory-tracker',
@@ -11,53 +13,88 @@ import { ProductService } from '../../../services/product.service';
 export class InventoryTrackerComponent {
   isWareHouse: boolean = false;
   currentWareHouseId!: string;
-  isCreateProduct: boolean = false;
+  isCreatePlan: boolean = false;
   products:any = []
-  availableProducts:any = []
-  unavailableProducts:any = []
+  wareHouses:any;
+  isChooseWareHouse:boolean = false;
 
-  itemType = [
-    {
-      "id": "1",
-      "name": "Unavailable Items",
-      "productCount": "80",
-    },
+  inventoryPlans:any;
+  available:any;
+  unavailable:any;
+  KIV:any;
 
-    {
-      "id": "2",
-      "name": "Deleteing Items",
-      "productCount": "30",
-    },
-
-    {
-      "id": "3",
-      "name": "Available Items",
-      "productCount": "50",
-    },
-    {
-      "id": "4",
-      "name": "KIV",
-      "productCount": "50",
-    }
-  ]
+  itemType:any;
   tableHeader = ['Name', 'Location', 'Inventory date', 'status', 'progress bar']
 
 
   constructor(private messageService: MessageService,
-              private productService: ProductService
+              private productService: ProductService,
+              private api: HttpServiceService,
+              private router: Router,
               ){}
 
   ngOnInit(){
-    // this.products = this.productService.getProducts()
-    this.availableProducts = this.productService.getAvailableProducts()
-    this.unavailableProducts = this.productService.getUnavailableProducts()
+    this.getInventoryPlan()
+    this.getWarehouses()
+
   }
 
-  getWareHouse(warehouseId:number){
-    let wareHouse = this.productService.getWareHouse(warehouseId)
-    console.log('warehouse', wareHouse)
-    return wareHouse[0].name
+  getInventoryPlan(){
+    return this.api.get('inventory/plans').subscribe(
+      res =>{
+        this.inventoryPlans=res
+        this.inventoryPlans = this.inventoryPlans.data
 
+        console.log('inventoryPlans', this.inventoryPlans)
+
+        this.available = this.inventoryPlans?.filter((item:any) => item.status === "available");
+        this.unavailable = this.inventoryPlans?.filter((item:any) => item.status === "unavailable");
+        this.KIV = this.inventoryPlans?.filter((item:any) => item.status === "kiv");
+
+        console.log("Available:", this.available);
+        console.log("Unavailable:", this.unavailable);
+        console.log("KIV:", this.KIV);
+
+        this.itemType =[
+          {
+            "id": "1",
+            "name": "Unavailable Items",
+            "product": this.unavailable,
+          },
+
+          {
+            "id": "2",
+            "name": "Deleteing Items",
+            "product": [],
+          },
+
+          {
+            "id": "3",
+            "name": "Available Items",
+            "product": this.available,
+          },
+          {
+            "id": "4",
+            "name": "KIV",
+            "product": this.KIV,
+          }
+        ]
+      }
+
+
+
+    )
+
+
+  }
+
+  getWarehouses(){
+    this.api.get('warehouses').subscribe(
+      res=>{
+        this.wareHouses = res
+        this.wareHouses = this.wareHouses.data
+      }
+    )
   }
 
   toggleWareHouse(id:string){
@@ -66,14 +103,17 @@ export class InventoryTrackerComponent {
   }
 
   toggleCreateProduct(){
-    this.isCreateProduct =!this.isCreateProduct;
+    this.isCreatePlan =!this.isCreatePlan;
   }
 
-
-
-  saveProduct(){
-
+  toggleChooseWareHouse(){
+    this.isChooseWareHouse =!this.isChooseWareHouse;
   }
+
+  route(page:string){
+    this.router.navigateByUrl(page);
+  }
+
 
 
 }

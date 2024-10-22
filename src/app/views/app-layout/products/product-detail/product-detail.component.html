@@ -241,25 +241,25 @@
                   <input formControlName="new_quantity" [ngClass]="{'border-red-400': isSubmitted && f.new_quantity.errors}" type="number" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Quantity">
               </div>
 
-              <!-- <div class="mt-4">
+              <div class="mt-4">
                   <label class="block text-gray-600 text-sm font-medium">
-                    Unit
+                    reason
                     <span class="text-red-500">*</span>
                   </label>
-                  <select formControlName="unit" [ngClass]="{'border-red-400': isSubmitted && f.unit.errors}" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
-                    <option value="">Select Unit</option>
+                  <select formControlName="reason" [ngClass]="{'border-red-400': isSubmitted && f.reason.errors}" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
+                    <option value="">Select reason</option>
 
-                    <ng-container *ngFor="let unit of units">
-                    <option value={{unit.id}} >{{unit.name}}</option>
+                    <ng-container *ngFor="let reason of reasons">
+                    <option value={{reason.id}} >{{reason.reason}}</option>
                     </ng-container>
                   </select>
-              </div> -->
+              </div>
 
               <div class="mt-4">
                 <label class="block text-gray-600 text-sm font-medium">
                   Reason for update
                 </label>
-                <textarea formControlName="reason" [ngClass]="{'border-red-400': isSubmitted && f.reason.errors}"  class="w-full border p-2 bg-gray-100 h-[120px]" placeholder="Enter your text here"></textarea>
+                <textarea formControlName="note" [ngClass]="{'border-red-400': isSubmitted && f.note.errors}"  class="w-full border p-2 bg-gray-100 h-[120px]" placeholder="Enter your text here"></textarea>
               </div>
 
             </div>

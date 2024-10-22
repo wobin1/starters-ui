@@ -19,7 +19,7 @@ const routes: Routes = [
       {path: 'products', component: ProductsComponent },
       {path: 'product/:id', component: ProductDetailComponent },
       {path: 'inventory-tracker', component: InventoryTrackerComponent },
-      {path: 'monthly-inventory', component: MonthlyInventoryComponent },
+      {path: 'monthly-inventory/:id', component: MonthlyInventoryComponent },
       {path: 'sales', component: SalesComponent },
       {path: 'purchases', component: PurchasesComponent },
     ]
