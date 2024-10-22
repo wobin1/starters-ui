@@ -34,32 +34,7 @@ export class ProductDetailComponent {
 
 
 
-updatedQuantityData = [
-  {
-    "label": "Current quantity",
-    "value": 200
-  },
-  {
-    "label": "New quantity",
-    "value": 206
-  },
-  {
-    "label": "Discrepancies",
-    "value": "+6 items"
-  },
-  {
-    "label": "Reason for update",
-    "value": "Adjustment"
-  },
-  {
-    "label": "Notes",
-    "value": ""
-  },
-  // {
-  //   "label": "Account",
-  //   "value": "Janet Haruna"
-  // }
-]
+updatedQuantityData:any = []
 
   cards = [{"title": "On hand", "figure": 234}, {"title": "To be Delivered", "figure": 64}, {"title": "To be ordered", "figure": 50}]
   responsiveOptions: any[] | undefined;
@@ -90,9 +65,10 @@ updatedQuantityData = [
 
         this.updateQuantityForm = this.fb.group({
           // Form fields here
-          quantity: ['', Validators.required],
-          unit: ['', [Validators.required]],
-          note: ['', [Validators.required]],
+          new_quantity: ['', Validators.required],
+          unit: [''],
+          reason: ['', [Validators.required]],
+          note: [''],
           // ... other fields
         });
 
@@ -106,6 +82,34 @@ updatedQuantityData = [
     console.log('router click')
   }
 
+  populateUpdatedQuantityData() {
+      this.updatedQuantityData = [
+        {
+          label: "Current quantity",
+          value: this.productDetail.data?.quantity || 0 // Handle missing quantity
+        },
+        {
+          label: "New quantity",
+          value: this.updateQuantityForm.get('new_quantity').value
+        },
+        {
+          label: "Discrepancies",
+          value: (this.productDetail.data?.quantity || 0) - this.updateQuantityForm.get('new_quantity').value || 0
+        },
+        {
+          label: "Reason for update",
+          value: this.updateQuantityForm.get('reason').value
+        },
+        {
+          label: "Notes",
+          value: ""
+        }
+      ];
+
+      this.toggleUpdatedProduct()
+
+      console.log('suppose to toggel updated product')
+}
 
   getProductId(){
     const url = window.location.href;
@@ -165,6 +169,8 @@ updatedQuantityData = [
   toggleUpdatedProduct(){
     this.isProductUpdated =!this.isProductUpdated;
     this.isUpdateProduct =!this.isUpdateProduct;
+
+    console.log('is updated product', this.isProductUpdated)
   }
 
   closeExistingModal(){
@@ -186,16 +192,17 @@ updatedQuantityData = [
 
     if(this.updateQuantityForm.invalid){
       console.log('form invalid');
+      this.loading = false;
       return;
     }
 
-    this.api.post('products/quantity/' + this.productId, this.updateQuantityForm.value).subscribe(
+    this.api.update('products/quantity/' + this.productId, this.updateQuantityForm.value).subscribe(
       res=>{
         console.log(res);
         this.loading = false;
         this.isSubmitted = false;
         this.showSuccess('Quantity updated successfully')
-        this.closeExistingModal();
+        this.populateUpdatedQuantityData()
       },
       err=>{
         console.log(err);

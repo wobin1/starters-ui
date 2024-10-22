@@ -238,10 +238,10 @@
                   New Quantity
                   <span class="text-red-500">*</span>
                 </label>
-                  <input formControlName="quantity" [ngClass]="{'border-red-400': isSubmitted && f.quantity.errors}" type="number" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Quantity">
+                  <input formControlName="new_quantity" [ngClass]="{'border-red-400': isSubmitted && f.new_quantity.errors}" type="number" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Quantity">
               </div>
 
-              <div class="mt-4">
+              <!-- <div class="mt-4">
                   <label class="block text-gray-600 text-sm font-medium">
                     Unit
                     <span class="text-red-500">*</span>
@@ -253,13 +253,13 @@
                     <option value={{unit.id}} >{{unit.name}}</option>
                     </ng-container>
                   </select>
-              </div>
+              </div> -->
 
               <div class="mt-4">
                 <label class="block text-gray-600 text-sm font-medium">
                   Reason for update
                 </label>
-                <textarea formControlName="note" [ngClass]="{'border-red-400': isSubmitted && f.note.errors}"  class="w-full border p-2 bg-gray-100 h-[120px]" placeholder="Enter your text here"></textarea>
+                <textarea formControlName="reason" [ngClass]="{'border-red-400': isSubmitted && f.reason.errors}"  class="w-full border p-2 bg-gray-100 h-[120px]" placeholder="Enter your text here"></textarea>
               </div>
 
             </div>
@@ -296,7 +296,7 @@
       <div class="p-4 w-full gap-8 flex px-12">
 
         <div class="w-full flex gap-6 flex-col items-center">
-          <img src="assets/images/check-inventory.png" alt="">
+          <img src={{images[0].itemImageSrc}} alt="">
 
          <div class=" flex gap-3 flex-col items-center">
           <div class="title capitalize font-bold text-3xl text-gray-800">Updated Quantity</div>

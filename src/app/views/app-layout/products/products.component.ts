@@ -49,12 +49,14 @@ export class ProductsComponent {
   }
 
   getProducts(){
-    this.api.get('products').subscribe(
+    return this.api.get('products').subscribe(
       res =>{
         this.products = res
         this.products = this.products.data
       }
     )
+
+
   }
 
   getWarehouseProducts(warehouseId:number){
