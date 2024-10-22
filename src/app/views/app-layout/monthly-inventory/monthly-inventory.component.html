@@ -3,7 +3,7 @@
 
   <div class="section ">
     <app-sub-header
-    pageTitle="[Monthly] augUST Inventory - Warehouse A"
+    [pageTitle]="'[Monthly] August Inventory -' + warehouseInventory?.location"
     action3Name="Complete Inventory"
     icon='assets/icons/add.png'
     buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="completeInventory()" ></app-sub-header>
@@ -51,10 +51,10 @@
           <div class="status mt-6">
             <div class="w-full ">
               <div class="flex w-full h-1.5 bg-gray-200 overflow-hidden" role="progressbar"
-                  [attr.aria-valuenow]="warehouseInventory.progress"
+                  [attr.aria-valuenow]="warehouseInventory?.progress"
                   aria-valuemin="0" aria-valuemax="100">
                 <div class="flex flex-col justify-center overflow-hidden bg-black text-xs text-white text-center whitespace-nowrap transition duration-500"
-                    [style.width]="warehouseInventory.progress + '%'">
+                    [style.width]="warehouseInventory?.progress + '%'">
                 </div>
               </div>
             </div>
@@ -103,7 +103,7 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-200 bg-white">
-                    <ng-container *ngFor="let product of warehouseInventory.product_list">
+                    <ng-container *ngFor="let product of warehouseInventory?.product_list">
                       <tr class="hover:bg-gray-100">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium  text-gray-800">
 
