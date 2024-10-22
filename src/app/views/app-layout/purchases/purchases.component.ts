@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { PurchaseService } from '../../../services/purchase.service';
+import { HttpServiceService } from '../../../services/http-service.service';
 
 @Component({
   selector: 'app-purchases',
@@ -18,8 +19,10 @@ export class PurchasesComponent {
   totalPrice: number = 0;
   invalidFields!: string[];
   purchases:any = []
+  products:any = [];
+  units:any;
   purchaseForm:any = {
-    "purchaseDate": "",
+    "date": "",
     "supplier": "",
   };
 
@@ -29,37 +32,49 @@ export class PurchasesComponent {
     { product: '', quantity: null, pricePerUnit: null }
   ];
 
-  suppliers = [
-    {"name": "supplier A"},
-    {"name": "supplier B"},
-    {"name": "supplier C"},
-    {"name": "supplier D"},
-  ]
+  suppliers:any;
 
   constructor(private fb:FormBuilder,
               private messageService: MessageService,
-              private purchaseService: PurchaseService){}
+              private purchaseService: PurchaseService,
+              private api:HttpServiceService){}
 
   ngOnInit(){
+    console.log('purchaseService')
     this.getPurchases()
+    this.getSuppliers()
+    this.getProducts()
   }
 
   toggleCreatePurchase() {
     this.isCreatePurchase = !this.isCreatePurchase;
   }
 
+  getProducts(){
+    this.api.get('products').subscribe(
+      res =>{
+        this.products = res
+        this.products = this.products.data
+      }
+    )
+  }
   getPurchases(){
-    this.purchases = this.purchaseService.getPurchases();
+    this.api.get('purchases').subscribe(
+      res=>{
+        this.purchases = res;
+        this.purchases = this.purchases.data;
+      }
+    )
   }
 
   addItem() {
-    this.purchaseItems.push({ product: '', quantity: null, pricePerUnit: null });
+    this.purchaseItems.push({ product: '', quantity: null, price_per_unit: null });
   }
 
 
   calculateTotalCost(): number {
     return this.purchaseItems.reduce((total, item) => {
-      return total + (item.quantity * item.pricePerUnit || 0);
+      return total + (item.quantity * item.price_per_unit || 0);
     }, 0);
   }
 
@@ -111,19 +126,57 @@ export class PurchasesComponent {
     this.loading = true;
     this.validateForm()
     const purchaseData = {
-      purchaseDate: this.purchaseForm.purchaseDate, // get this from the input
+      date: this.purchaseForm.date, // get this from the input
       supplier: this.purchaseForm.supplier, // get this from the input
       items: this.purchaseItems,
-      totalCost: this.calculateTotalCost()
+      total_cost: this.calculateTotalCost()
     };
 
-    // Logic to save purchaseData (e.g., call a service)
-    this.showSuccess('purchase added successfully!')
-    console.log(purchaseData);
+    this.api.post('purchases', purchaseData).subscribe(
+      res=>{
+        console.log(res);
+        this.loading = false;
+        this.resetForm()
+        this.showSuccess('purchase added successfully!')
+      },
+      err=>{
+        console.log(err)
+        this.showError('Failed to add purchase, try again')
+        this.loading = false;
+      }
+    )
+  }
+
+  getUnits(){
+    this.api.get('units').subscribe(
+      res=>{
+        this.units = res;      }
+    )
+  }
+
+  getSuppliers(){
+    this.api.get('suppliers').subscribe(
+      res=>{
+        this.suppliers = res;
+      },
+      err=>{
+        console.log(err)
+      }
+    )
   }
 
   toggleAddPurchase(){
     this.isCreatePurchase = !this.isCreatePurchase
+  }
+
+  resetForm(){
+    this.isSubmitted = false;
+    this.purchaseForm.date='', // get this from the input
+    this.purchaseForm.supplier='', // get this from the input
+    this.purchaseItems= [
+      { product: '', quantity: null, pricePerUnit: null }
+    ];
+
   }
 
   showSuccess(message: string) {

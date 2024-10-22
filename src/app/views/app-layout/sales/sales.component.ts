@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SalesService } from '../../../services/sales.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { HttpServiceService } from '../../../services/http-service.service';
 
 @Component({
   selector: 'app-sales',
@@ -16,11 +17,11 @@ export class SalesComponent {
     "Date",
     "Sales",
     "Revenue",
-    "Profit",
-    "Expenses",
-    "Customers",
-    "Top Sellers",
-    "Notes"
+    // "Profit",
+    // "Expenses",
+    // "Customers",
+    // "Top Sellers",
+    // "Notes"
   ]
 
   sales:any;
@@ -28,13 +29,17 @@ export class SalesComponent {
   salesForm:any;
   isSubmitted: boolean = false;
   loading: boolean = false;
+  products:any;
 
 
-  constructor(private salesService: SalesService, private fb: FormBuilder, private messageService: MessageService){
+  constructor(private salesService: SalesService,
+              private fb: FormBuilder,
+              private messageService: MessageService,
+              private api:HttpServiceService){
     this.salesForm = this.fb.group({
       // Sale Information
-      saleDate: ['', Validators.required],
-      pricePerUnit: ['', [Validators.required, Validators.min(0)]],
+      date: ['', Validators.required],
+      price: ['', [Validators.required, Validators.min(0)]],
 
       // Sale Details
       product: ['', Validators.required],  // Not required by default
@@ -45,6 +50,7 @@ export class SalesComponent {
 
   ngOnInit(){
     this.getSales()
+    this.getProducts()
   }
 
   toggleAddSale(){
@@ -60,8 +66,26 @@ export class SalesComponent {
   }
 
   getSales(){
-    let data =this.salesService.getSalesData()
-    this.sales = data
+    this.api.get('sales').subscribe(
+      res=>{
+        this.sales = res;
+        this.sales = this.sales.data;
+      },
+      err=>{
+        console.log(err)
+        this.showError('Failed to load sales data');
+      }
+    )
+  }
+
+  getProducts(){
+    this.api.get('products').subscribe(
+      res =>{
+        this.products = res
+        this.products = this.products.data
+        console.log('products', this.products)
+      }
+    )
   }
 
 
@@ -75,14 +99,18 @@ export class SalesComponent {
       return;
     }
 
-    const purchaseData = {
-      purchaseDate: '', // get this from the input
-      supplier: '', // get this from the input
-    };
-
-    // Logic to save purchaseData (e.g., call a service)
-    this.showSuccess('sale saved successfully!')
-    console.log(purchaseData);
+    this.api.post('sales', this.salesForm.value).subscribe(
+      res=>{
+        console.log(res)
+        this.salesForm.reset();
+        this.isAddSale = false;
+        this.showSuccess('Sale added successfully');
+      },
+      err=>{
+        console.log(err)
+        this.showError('Failed to add sale');
+      }
+    )
   }
 
   isLast(item: string, list: string[]): boolean {

@@ -8,6 +8,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
 import { CarouselModule } from 'primeng/carousel';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 
@@ -20,7 +21,8 @@ const primeNG: any = [
   StyleClassModule,
   GalleriaModule,
   ImageModule,
-  CarouselModule
+  CarouselModule,
+  ProgressSpinnerModule
 ]
 
 

@@ -52,7 +52,6 @@ export class LoginComponent {
         this.loading = false;
         this.response = res;
         this.storage.savedata('jwt_token', this.response.data.token)
-        console.log('login response', this.response.data.token)
         this.showSuccess('login successfull!')
         this.router.navigate(['/app/dashboard']);
 

@@ -20,8 +20,18 @@ export class ProductDetailComponent {
   updateQuantityForm!:any;
   productId:any;
   productDetail:any =null;
-  images:any;
+  units:any;
+  images:any = [
+    {
+        itemImageSrc: 'https://i.imgur.com/VWBa2bd.jpg',
+        thumbnailImageSrc: 'https://i.imgur.com/VWBa2bd.jpg',
+        alt: 'Description for Image 1',
+        title: 'Title 1'
+    }
+
+];
   wareHouses:any;
+
 
 
 updatedQuantityData = [
@@ -88,6 +98,7 @@ updatedQuantityData = [
 
 
         this.getProduct(this.getProductId())
+        this.getUnits();
     }
 
   route(){
@@ -107,7 +118,8 @@ updatedQuantityData = [
       res=>{
         console.log(res);
         this.productDetail = res;
-        this.images = this.productDetail.data.media
+        // this.images = this.productDetail.data.media
+        this.addImages(this.productDetail.data.media)
         console.log('images', this.images);
       },
       err=>{
@@ -116,6 +128,19 @@ updatedQuantityData = [
     )
   }
 
+  getUnits(){
+    this.api.get('units').subscribe(
+      res=>{
+        this.units = res;
+        this.units = this.units.data
+      },
+      err=>{
+        console.log(err);
+       }
+    )
+  }
+
+
   getWarehouses(){
     this.api.get('warehouses').subscribe(
       res=>{
@@ -123,6 +148,17 @@ updatedQuantityData = [
         this.wareHouses = this.wareHouses.data
       }
     )
+  }
+
+  addImages(images:any){
+    for(let image of images){
+      this.images.push({
+        itemImageSrc: image,
+        thumbnailImageSrc: image,
+        alt: 'Description for Image'+ this.images.length,
+        title: 'Title'+ this.images.length
+      })
+    }
   }
 
 
@@ -153,13 +189,23 @@ updatedQuantityData = [
       return;
     }
 
-    setTimeout(() => {
-      this.showSuccess('quantity updated successfully!')
-      this.loading = false;
-
-    }, 2000)
+    this.api.post('products/quantity/' + this.productId, this.updateQuantityForm.value).subscribe(
+      res=>{
+        console.log(res);
+        this.loading = false;
+        this.isSubmitted = false;
+        this.showSuccess('Quantity updated successfully')
+        this.closeExistingModal();
+      },
+      err=>{
+        console.log(err);
+        this.loading = false;
+        this.showError('Failed to update quantity')
+      }
+    )
 
   }
+
 
 
   showSuccess(message: string) {
@@ -170,7 +216,5 @@ updatedQuantityData = [
   showError(message: string) {
     this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
-
-
 
 }

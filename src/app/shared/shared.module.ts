@@ -14,6 +14,7 @@ import { ToastComponent } from './toast/toast.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EmptyListComponent } from './empty-list/empty-list.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -31,6 +32,7 @@ import { EmptyListComponent } from './empty-list/empty-list.component';
     ToastComponent,
     CreateProductComponent,
     EmptyListComponent,
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,7 @@ import { EmptyListComponent } from './empty-list/empty-list.component';
     ToastComponent,
     CreateProductComponent,
     EmptyListComponent,
+    SpinnerComponent
 
   ]
 })

@@ -14,7 +14,7 @@ import { InventoryTrackerComponent } from './inventory-tracker/inventory-tracker
 import { MonthlyInventoryComponent } from './monthly-inventory/monthly-inventory.component';
 import { SalesComponent } from './sales/sales.component';
 import { PurchasesComponent } from './purchases/purchases.component';
-
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 @NgModule({
@@ -36,7 +36,8 @@ import { PurchasesComponent } from './purchases/purchases.component';
     ReactiveFormsModule,
     HttpClientModule,
     PrimengModule,
-    FormsModule
+    FormsModule,
+    QRCodeModule
   ]
 })
 export class AppLayoutModule { }

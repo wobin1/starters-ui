@@ -36,10 +36,10 @@
                       <tbody class="divide-y divide-gray-200 bg-white">
                         <ng-container *ngFor="let purchase of purchases; let i = index">
                           <tr class="hover:bg-gray-100" (click)="toggleExpand(i)">
-                            <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-sm text-gray-800">{{purchase.purchaseDate}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-sm text-gray-800">{{purchase.purchase_date}}</td>
                             <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-sm text-gray-500">{{purchase.supplier}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-start text-sm font-medium text-gray-500">{{purchase.items.length}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-start text-sm font-medium text-gray-500">{{getTotalPrice(purchase.items)}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-start text-sm font-medium text-gray-500">{{purchase.items}}</td>
+                            <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-start text-sm font-medium text-gray-500">{{purchase.total_cost}}</td>
                             <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-start text-sm font-medium text-gray-500">
                               <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
@@ -61,12 +61,12 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <ng-container *ngFor="let item of purchase.items">
+                                    <ng-container *ngFor="let item of purchase.products">
                                       <tr>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{item.product}}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.quantity}}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.pricePerUnit | currency}}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{item.totalPrice | currency}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₦{{item.price_per_unit}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₦{{item.total_price}}</td>
                                       </tr>
                                     </ng-container>
                                   </tbody>
@@ -123,7 +123,7 @@
                   Purchase Date
                   <span class="text-red-500">*</span>
                 </label>
-                <input [(ngModel)]="purchaseForm.purchaseDate" name="purchaseDate" [ngClass]="{'border-red-400': isSubmitted && purchaseForm.purchaseDate == '' }" type="date" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Purchase Date">
+                <input [(ngModel)]="purchaseForm.date" name="date" [ngClass]="{'border-red-400': isSubmitted && purchaseForm.date == '' }" type="date" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Purchase Date">
               </div>
 
               <div>
@@ -134,7 +134,9 @@
                 <select [(ngModel)]="purchaseForm.supplier" name="supplier"   [ngClass]="{'border-red-400': isSubmitted && purchaseForm.supplier== '' }" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
                   <option value="">Select Unit</option>
 
-                  <option *ngFor="let supplier of suppliers">{{supplier.name}}</option>
+                  <ng-container *ngFor="let supplier of suppliers?.data">
+                    <option value={{supplier.id}}>{{supplier.name}}</option>
+                  </ng-container>
                 </select>
               </div>
             </div>
@@ -150,6 +152,7 @@
                   Product
                   <span class="text-red-500">*</span>
                 </label>
+
                 <input [(ngModel)]="item.product" [ngClass]="{'border-red-400': isSubmitted && purchaseItems[0].product == '' }" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Product Name">
               </div>
 
@@ -166,7 +169,7 @@
                   Price Per Unit
                   <span class="text-red-500">*</span>
                 </label>
-                <input [(ngModel)]="item.pricePerUnit" [ngClass]="{'border-red-400': isSubmitted && purchaseItems[0].pricePerUnit == null }" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Price">
+                <input [(ngModel)]="item.price_per_unit" [ngClass]="{'border-red-400': isSubmitted && purchaseItems[0].price_per_unit == null }" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Enter Price">
               </div>
             </div>
 
@@ -194,7 +197,7 @@
           <div>
             <span class="text-gray-500 text-sm">Advanced settings</span>
           </div>
-          <button type="submit" (click)="savePurchase()" >
+          <button type="submit" (click)="savePurchase()">
             <p-button class="p-2 px-4 bg-gray-700 text-white text-sm" label="Save" [loading]="loading"></p-button>
           </button>
         </div>

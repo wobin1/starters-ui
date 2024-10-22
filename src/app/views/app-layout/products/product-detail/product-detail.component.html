@@ -15,7 +15,7 @@
     <div class="side1 basis-[45%]">
       <div class="card flex justify-center">
         <p-galleria
-          [value]="productDetail?.data.media"
+          [value]="images"
           [responsiveOptions]="responsiveOptions"
           [containerStyle]="{ 'max-width': '640px' }"
           [numVisible]="5">
@@ -32,11 +32,12 @@
 
       <div class="mt-6 px-16 py-4 h-[300px] flex flex-col justify-center  bg-white">
         <div class="w-full flex justify-center items-center">
-          <h4>Barcode</h4>
+          <h4>QR code</h4>
         </div>
 
         <div class="w-full flex justify-center">
-          <img src="assets/images/barcode.png" class="w-[200px]" alt="">
+          <!-- <img src="assets/images/barcode.png" class="w-[200px]" alt=""> -->
+          <qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
         </div>
       </div>
     </div>
@@ -214,18 +215,18 @@
 
         <div class="basis-1/1 w-full">
           <div class="image w-full">
-            <img src="assets/images/image.png" class="object-cover w-full h-full max-h-[220px]" alt="">
+            <img src={{images[0].itemImageSrc}} class="object-cover w-full h-full max-h-[220px]" alt="">
           </div>
 
           <div class="bg-white flex flex-col gap-2 p-1 md:p-4 lg:p-4">
             <p class="capitalize">Product</p>
-            <h4 class="text-gray-800 text-xl font-bold uppercase">Cat Fish</h4>
-            <p class="text-gray-500 w-[120px] text-center bg-gray-100 text-sm mt-1 px-1 py-1 rounded-full">Code: SWE-1</p>
+            <h4 class="text-gray-800 text-xl font-bold uppercase">{{productDetail?.data.name}}</h4>
+            <p class="text-gray-500 w-[120px] text-center bg-gray-100 text-sm mt-1 px-1 py-1 rounded-full">Code: {{productDetail?.data.code}}</p>
           </div>
         </div>
 
         <div class="basis-1/1 w-full">
-          <div class="title">Current quantity 200 items</div>
+          <div class="title">Current quantity {{productDetail?.data.quantity}} items</div>
         <div class="py-4 w-full">
 
           <div class=" py-3 pb-4 w-full">
@@ -248,7 +249,9 @@
                   <select formControlName="unit" [ngClass]="{'border-red-400': isSubmitted && f.unit.errors}" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
                     <option value="">Select Unit</option>
 
-                    <option *ngFor="let warehouse of wareHouses">{{warehouse.name}}</option>
+                    <ng-container *ngFor="let unit of units">
+                    <option value={{unit.id}} >{{unit.name}}</option>
+                    </ng-container>
                   </select>
               </div>
 

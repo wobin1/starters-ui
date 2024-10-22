@@ -47,14 +47,14 @@
                         </div>
                       </td>
                       <td class="px-6 py-4 text-sm text-gray-500">{{sale.revenue}}</td>
-                      <td class="px-6 py-4 text-center text-sm font-medium text-gray-500">{{sale.profit}}</td>
+                      <!-- <td class="px-6 py-4 text-center text-sm font-medium text-gray-500">{{sale.profit}}</td>
                       <td class="px-6 py-4 text-center text-sm font-medium text-gray-500">{{sale.expenses}}</td>
                       <td class="px-6 py-4 text-center text-sm font-medium text-gray-500">{{sale.customers}}</td>
                       <td class="px-6 py-4 text-start whitespace-nowrap text-sm font-medium text-gray-500">
                         <ng-container *ngFor="let product of sale.topSellers">
                           {{product}}
                         </ng-container>
-                      </td>
+                      </td> -->
                       <td class="px-6 py-4 text-start text-sm font-medium text-gray-500">{{sale.notes}}</td>
                       <td class="px-6 py-4 text-start text-sm font-medium text-gray-500">
                         <span>
@@ -79,12 +79,12 @@
                             </thead>
                             <tbody>
 
-                                <ng-container *ngFor="let detail of sale.salesDetails">
+                                <ng-container *ngFor="let detail of sale.sale_details">
                                   <tr>
                                     <td class="px-6 py-4  text-sm text-gray-800">{{detail.time}}</td>
                                     <td class="px-6 py-4  text-sm text-gray-800">{{detail.product}}</td>
                                     <td class="px-6 py-4  text-sm text-gray-800">{{detail.quantity}}</td>
-                                    <td class="px-6 py-4  text-sm text-gray-800">{{detail.saleAmount}}</td>
+                                    <td class="px-6 py-4  text-sm text-gray-800">{{detail.sale_amount}}</td>
                                     <!-- <td class="px-6 py-4  text-sm text-start text-gray-500">{{detail.revenue | currency}}</td> -->
                                   </tr>
                                 </ng-container>
@@ -153,7 +153,7 @@
                   Sale Date
                   <span class="text-red-500">*</span>
                 </label>
-                <input formControlName="saleDate" [ngClass]="{'border-red-400': isSubmitted && f.saleDate.errors}" type="date" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Sale Date">
+                <input formControlName="date" [ngClass]="{'border-red-400': isSubmitted && f.saleDate.errors}" type="date" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Sale Date">
               </div>
 
               <!-- <div>
@@ -174,7 +174,14 @@
                 <label class="block text-gray-600 text-sm font-medium">
                   Product
                 </label>
-                <input formControlName="product" [ngClass]="{'border-red-400': isSubmitted && f.product.errors}" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="product">
+                <select formControlName="product" [ngClass]="{'border-red-400': isSubmitted && f.product.errors}" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm">
+                  <option value="">Select product</option>
+
+                  <ng-container *ngFor="let product of products">
+                    <option value={{product.id}}>{{product.name}}</option>
+                  </ng-container>
+                </select>
+                <!-- <input formControlName="product" [ngClass]="{'border-red-400': isSubmitted && f.product.errors}" type="text" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="product"> -->
               </div>
 
               <div>
@@ -188,7 +195,7 @@
                 <label class="block text-gray-600 text-sm font-medium">
                   Price
                 </label>
-                <input formControlName="pricePerUnit" [ngClass]="{'border-red-400': isSubmitted && f.pricePerUnit.errors}"  type="number" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Price">
+                <input formControlName="price" [ngClass]="{'border-red-400': isSubmitted && f.pricePerUnit.errors}"  type="number" class="block border w-full px-3 py-2 bg-gray-100 focus:outline-none focus:ring-black-500 focus:border-black-500 sm:text-sm" placeholder="Price">
               </div>
             </div>
           </div>
