@@ -17,7 +17,7 @@
         <p-galleria
           [value]="images"
           [responsiveOptions]="responsiveOptions"
-          [containerStyle]="{ 'max-width': '640px' }"
+          [containerStyle]="{ 'width': '400px', 'height': '300px' }"
           [numVisible]="5">
           <ng-template pTemplate="item" let-item>
             <img [src]="item.itemImageSrc" style="width: 100%;" alt="{{ item.alt }}" />
