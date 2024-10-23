@@ -104,6 +104,7 @@ export class SalesComponent {
         console.log(res)
         this.salesForm.reset();
         this.isAddSale = false;
+        this.getSales()
         this.showSuccess('Sale added successfully');
       },
       err=>{

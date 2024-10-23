@@ -137,6 +137,7 @@ export class PurchasesComponent {
         console.log(res);
         this.loading = false;
         this.resetForm()
+        this.getPurchases();
         this.showSuccess('purchase added successfully!')
       },
       err=>{

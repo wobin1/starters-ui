@@ -96,6 +96,8 @@ export class CreateNewInventoryPlanComponent {
         console.log(res);
         this.showSuccess('Product created successfully');
         this.createPlanForm.reset();
+        this.isSubmitted = false;
+
         this.planProducts.length = 0
       },
       err => {

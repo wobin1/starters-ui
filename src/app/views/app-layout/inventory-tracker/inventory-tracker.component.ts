@@ -104,6 +104,7 @@ export class InventoryTrackerComponent {
 
   toggleCreateProduct(){
     this.isCreatePlan =!this.isCreatePlan;
+    this.getInventoryPlan()
   }
 
   toggleChooseWareHouse(){
