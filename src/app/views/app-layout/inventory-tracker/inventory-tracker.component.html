@@ -34,9 +34,6 @@
                 <ng-container>
                   <span class="text-xs text-gray-500 p-1 px-4 rounded-full bg-gray-200/85">{{item.product.length}} products </span>
                 </ng-container>
-
-
-
               </div>
 
 
@@ -113,10 +110,10 @@
 
 
                       </tbody>
+
                     </table>
-                    <div *ngIf="item.name !== 'Available Items' && item.name !== 'Unavailable Items'" class="bg-white py-4">
-                      <app-empty-list></app-empty-list>
-                    </div>
+
+
                   </div>
                 </div>
               </div>
@@ -130,14 +127,24 @@
 
         </div>
       </ng-container>
+
+
+      <div *ngIf="inventoryPlans?.length <=0 && pageLoading" class="w-full flex justify-center items-center h-[50vh]">
+        <app-spinner></app-spinner>
+      </div>
+
+      <!-- <div *ngIf="item.name !== 'Available Items' && item.name !== 'Unavailable Items'" class="bg-white py-4">
+        <app-empty-list></app-empty-list>
+      </div> -->
+
+
    </div>
 
 
-
    <div *ngIf="isCreatePlan" class="product-modal">
-    <!-- <app-create-product (togleModal)="toggleCreateProduct()" (saveProduct)="saveProduct()"></app-create-product> -->
-     <app-create-new-inventory-plan (togleModal)="toggleCreateProduct()"></app-create-new-inventory-plan>
-  </div>
+      <!-- <app-create-product (togleModal)="toggleCreateProduct()" (saveProduct)="saveProduct()"></app-create-product> -->
+      <app-create-new-inventory-plan (togleModal)="toggleCreateProduct()"></app-create-new-inventory-plan>
+    </div>
 
 </div>
 

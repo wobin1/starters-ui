@@ -17,8 +17,9 @@ export class InventoryTrackerComponent {
   products:any = []
   wareHouses:any;
   isChooseWareHouse:boolean = false;
+  pageLoading:any = false;
 
-  inventoryPlans:any;
+  inventoryPlans:any =[];
   available:any;
   unavailable:any;
   KIV:any;
@@ -40,6 +41,7 @@ export class InventoryTrackerComponent {
   }
 
   getInventoryPlan(){
+    this.pageLoading= true;
     return this.api.get('inventory/plans').subscribe(
       res =>{
         this.inventoryPlans=res
@@ -54,6 +56,7 @@ export class InventoryTrackerComponent {
         console.log("Available:", this.available);
         console.log("Unavailable:", this.unavailable);
         console.log("KIV:", this.KIV);
+        this.pageLoading=false;
 
         this.itemType =[
           {
@@ -80,11 +83,7 @@ export class InventoryTrackerComponent {
           }
         ]
       }
-
-
-
     )
-
 
   }
 

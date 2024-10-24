@@ -17,6 +17,7 @@ export class ProductsComponent {
   currentWareHouseId!: string;
   isCreateProduct: boolean = false;
   wareHouses:any = []
+  pageLoading:boolean = false;
 
   products:any = [];
 
@@ -41,10 +42,15 @@ export class ProductsComponent {
   }
 
   getWarehouses(){
+    this.pageLoading = true;
     this.api.get('warehouses').subscribe(
       res=>{
         this.wareHouses = res
         this.wareHouses = this.wareHouses.data
+        this.pageLoading = false;
+      },
+      err=>{
+        console.log('err')
       }
     )
   }

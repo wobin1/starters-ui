@@ -30,6 +30,7 @@ export class SalesComponent {
   isSubmitted: boolean = false;
   loading: boolean = false;
   products:any;
+  pageLoading: boolean = false;
 
 
   constructor(private salesService: SalesService,
@@ -66,10 +67,12 @@ export class SalesComponent {
   }
 
   getSales(){
+    this.pageLoading = true;
     this.api.get('sales').subscribe(
       res=>{
         this.sales = res;
         this.sales = this.sales.data;
+        this.pageLoading = false;
       },
       err=>{
         console.log(err)

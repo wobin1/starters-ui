@@ -13,8 +13,10 @@ export class MonthlyInventoryComponent {
   iscompleteInventry:boolean = false;
   isWareHouse:boolean = false;
   wareHousesId:any;
-  warehouseInventory:any;
+  warehouseInventory:any =[];
   completeInventoryData:any;
+  loadingUpdatedQuantity:boolean = false;
+  loadingWarehouse:boolean = false;
   isProductUpdated: boolean = false;
   images: any[] = [
     {
@@ -48,7 +50,7 @@ export class MonthlyInventoryComponent {
         title: 'Title 5'
     },
 
-];
+  ];
 
 
 
@@ -154,6 +156,7 @@ export class MonthlyInventoryComponent {
       "difference": 2
     }
   ]
+
   constructor(private router: Router, private api:HttpServiceService){}
 
   ngOnInit(){

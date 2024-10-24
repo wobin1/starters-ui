@@ -32,6 +32,11 @@
                 <div class="value text-gray-600 font-normal">{{item?.value}}</div>
               </div>
             </ng-container>
+
+            <div *ngIf="warehouseInventory?.length <=0 && loadingUpdatedQuantity" class="w-full flex justify-center items-center h-[50vh]">
+              <app-spinner></app-spinner>
+            </div>
+
             <div class="flex justify-between items-center">
               <div class="label text-gray-800 font-semibold">Account</div>
               <div class="value text-gray-600 font-normal p-2 bg-white flex items-center gap-2 rounded-full">

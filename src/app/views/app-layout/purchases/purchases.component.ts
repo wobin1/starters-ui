@@ -16,6 +16,7 @@ export class PurchasesComponent {
   isSubmitted:boolean = false;
   formIsValid:boolean = false;
   loading:boolean = false;
+  pageLoading:boolean = false;
   totalPrice: number = 0;
   invalidFields!: string[];
   purchases:any = []
@@ -59,10 +60,12 @@ export class PurchasesComponent {
     )
   }
   getPurchases(){
+    this.pageLoading=true;
     this.api.get('purchases').subscribe(
       res=>{
         this.purchases = res;
         this.purchases = this.purchases.data;
+        this.pageLoading=false;
       }
     )
   }
@@ -85,7 +88,6 @@ export class PurchasesComponent {
     "totalCost",
     ""
   ]
-
 
   getTotalPrice(items: any[]): number {
     return items.reduce((sum, item) => sum + item.totalPrice, 0);

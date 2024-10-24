@@ -107,6 +107,14 @@
                   </ng-container>
                 </tbody>
               </table>
+
+              <div *ngIf="sales?.length <=0 && pageLoading" class="w-full flex justify-center items-center h-[50vh]">
+                <app-spinner></app-spinner>
+              </div>
+
+              <div *ngIf="sales?.length<=0 && !pageLoading ">
+               <app-empty-list></app-empty-list>
+              </div>
             </div>
           </div>
         </div>

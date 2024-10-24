@@ -58,8 +58,10 @@
 
           </button>
         </ng-container>
-
        </div>
+
+
+
 
        <!-- Pagination -->
        <div *ngIf="isWareHouse && currentWareHouseId===item.id" class="flex w-full justify-end mt-8">
@@ -69,8 +71,14 @@
      </div>
    </ng-container>
 
-   <!-- <app-empty-list></app-empty-list> -->
 
+   <div *ngIf="wareHouses.length <=0 && pageLoading" class="w-full flex justify-center items-center h-[50vh]">
+    <app-spinner></app-spinner>
+  </div>
+
+  <div *ngIf="wareHouses.length<=0 && !pageLoading ">
+   <app-empty-list></app-empty-list>
+  </div>
 
   <div *ngIf="isCreateProduct" class="product-modal">
     <app-create-product (togleModal)="toggleCreateProduct()" (saveProduct)="saveProduct()"></app-create-product>

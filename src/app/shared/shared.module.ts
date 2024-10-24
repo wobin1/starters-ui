@@ -56,7 +56,6 @@ import { CreateNewInventoryPlanComponent } from './create-new-inventory-plan/cre
     EmptyListComponent,
     SpinnerComponent,
     CreateNewInventoryPlanComponent
-
   ]
 })
 export class SharedModule {

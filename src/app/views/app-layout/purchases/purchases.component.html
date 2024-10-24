@@ -33,7 +33,7 @@
                           </ng-container>
                         </tr>
                       </thead>
-                      <tbody class="divide-y divide-gray-200 bg-white">
+                      <tbody class="divide-y divide-gray-200 bg-white w-full">
                         <ng-container *ngFor="let purchase of purchases; let i = index">
                           <tr class="hover:bg-gray-100" (click)="toggleExpand(i)">
                             <td class="px-6 py-4 whitespace-nowrap cursor-pointer text-sm text-gray-800">{{purchase.purchase_date}}</td>
@@ -76,7 +76,17 @@
                           </tr>
                         </ng-container>
                       </tbody>
+
+
                     </table>
+
+                    <div *ngIf="purchases.length <=0 && pageLoading" class="w-full flex justify-center items-center h-[50vh]">
+                      <app-spinner></app-spinner>
+                    </div>
+
+                    <div *ngIf="purchases.length<=0 && !pageLoading ">
+                     <app-empty-list></app-empty-list>
+                    </div>
 
                   </div>
 
