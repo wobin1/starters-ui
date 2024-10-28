@@ -19,6 +19,7 @@ export class MonthlyInventoryComponent {
   completeInventoryData:any;
   loadingUpdatedQuantity:boolean = false;
   loadingWarehouse:boolean = false;
+  loadingwarehouseInventory:boolean = false;
   isProductUpdated: boolean = false;
   currentMonthName: any;
   newCounted:any;
@@ -57,6 +58,7 @@ export class MonthlyInventoryComponent {
   }
 
   getWarehouseInventory(){
+    this.loadingwarehouseInventory = true;
     this.api.get('warehouses/inventory/' + this.wareHousesId).subscribe(
       res=>{
         console.log(res);
@@ -87,7 +89,7 @@ export class MonthlyInventoryComponent {
             "value": 200
           }
         )
-
+        this.loadingwarehouseInventory = false;
         console.log(this.updatedQuantityData)
       },
       err=>{
