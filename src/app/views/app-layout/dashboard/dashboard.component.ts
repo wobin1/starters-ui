@@ -49,7 +49,7 @@ export class DashboardComponent {
             datasets: [
                 {
                     data: [300, 200],
-                    backgroundColor: [documentStyle.getPropertyValue('--red-700'), documentStyle.getPropertyValue('--gray-500')],
+                    backgroundColor: [documentStyle.getPropertyValue('--red-700'), documentStyle.getPropertyValue('--gray-400')],
                     // hoverBackgroundColor: [documentStyle.getPropertyValue('--gray-500'), documentStyle.getPropertyValue('--black-400')]
                 }
             ]

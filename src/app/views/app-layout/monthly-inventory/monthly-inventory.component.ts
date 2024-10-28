@@ -18,150 +18,29 @@ export class MonthlyInventoryComponent {
   loadingUpdatedQuantity:boolean = false;
   loadingWarehouse:boolean = false;
   isProductUpdated: boolean = false;
-  images: any[] = [
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 1',
-        title: 'Title 1'
-    },
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 2',
-        title: 'Title 2'
-    },
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 3',
-        title: 'Title 3'
-    },
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 4',
-        title: 'Title 4'
-    },
-    {
-        itemImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        thumbnailImageSrc: 'https://images.unsplash.com/photo-1564509101718-db7a4e1089bd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c25ha3N8ZW58MHx8MHx8fDA%3D',
-        alt: 'Description for Image 5',
-        title: 'Title 5'
-    },
-
-  ];
-
+  currentMonthName: any;
+  newCounted:any;
 
 
   updatedQuantityData:any = []
 
-  descrepancies =   [
-      {
-        "product": "Product A",
-        "value": "+5 units"
-      },
-      {
-        "product": "Product B",
-        "value": "+1 units"
-      },
-      {
-        "product": "Product C",
-        "value": "-2 units"
-      }
-    ]
-
 
   tableHeader = ['No', 'Image', 'Product Name', 'On Hand', 'Counted', 'Difference']
-
-  products = [
-    {
-      "no": 1,
-      "image": "assets/images/product1.jpg",
-      "productName": "Product 1",
-      "onHand": 100,
-      "counted": 102,
-      "difference": 2
-    },
-    {
-      "no": 2,
-      "image": "assets/images/product2.jpg",
-      "productName": "Product 2",
-      "onHand": 50,
-      "counted": 48,
-      "difference": -2
-    },
-    {
-      "no": 3,
-      "image": "assets/images/product3.jpg",
-      "productName": "Product 3",
-      "onHand": 150,
-      "counted": 150,
-      "difference": 0
-    },
-    {
-      "no": 4,
-      "image": "assets/images/product4.jpg",
-      "productName": "Product 4",
-      "onHand": 200,
-      "counted": 195,
-      "difference": -5
-    },
-    {
-      "no": 5,
-      "image": "assets/images/product5.jpg",
-      "productName": "Product 5",
-      "onHand": 80,
-      "counted": 85,
-      "difference": 5
-    },
-    {
-      "no": 6,
-      "image": "assets/images/product6.jpg",
-      "productName": "Product 6",
-      "onHand": 120,
-      "counted": 118,
-      "difference": -2
-    },
-    {
-      "no": 7,
-      "image": "assets/images/product7.jpg",
-      "productName": "Product 7",
-      "onHand": 75,
-      "counted": 70,
-      "difference": -5
-    },
-    {
-      "no": 8,
-      "image": "assets/images/product8.jpg",
-      "productName": "Product 8",
-      "onHand": 90,
-      "counted": 92,
-      "difference": 2
-    },
-    {
-      "no": 9,
-      "image": "assets/images/product9.jpg",
-      "productName": "Product 9",
-      "onHand": 110,
-      "counted": 115,
-      "difference": 5
-    },
-    {
-      "no": 10,
-      "image": "assets/images/image.png",
-      "productName": "Product 10",
-      "onHand": 60,
-      "counted": 62,
-      "difference": 2
-    }
-  ]
 
   constructor(private router: Router, private api:HttpServiceService){}
 
   ngOnInit(){
     this.getWareHouseId();
     this.getWarehouseInventory();
+
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    this.currentMonthName = monthNames[new Date().getMonth()];
+    console.log("Current month:", this.currentMonthName);
+
   }
 
   route(){
@@ -242,6 +121,19 @@ export class MonthlyInventoryComponent {
     this.iscompleteInventry =!this.iscompleteInventry;
   }
 
+  updateDifference(product: any) {
+    product.difference = product.counted - product.on_hand;
+  }
+
+  confirmUpdate(no: number) {
+    const item = this.warehouseInventory?.product_list.find((product: any) => product.no === no);
+    if (item) {
+      console.log(`Confirmed update for product ${item.product_name}:`, item);
+      // You can add additional logic here if needed, such as saving changes to a server
+    } else {
+      console.log(`Product with no. ${no} not found.`);
+    }
+  }
 
 
 }

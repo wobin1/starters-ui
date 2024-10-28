@@ -3,7 +3,7 @@
 
   <div class="section ">
     <app-sub-header
-    [pageTitle]="'[Monthly] August Inventory -' + warehouseInventory?.location"
+    [pageTitle]="currentMonthName + ' Inventory -' + warehouseInventory?.location"
     action3Name="Complete Inventory"
     icon='assets/icons/add.png'
     buttonStyle="active:scale-95 bg-primary text-sm text-white p-2 hover:gray-400" (action3)="completeInventory()" ></app-sub-header>
@@ -110,35 +110,37 @@
                   <tbody class="divide-y divide-gray-200 bg-white">
                     <ng-container *ngFor="let product of warehouseInventory?.product_list">
                       <tr class="hover:bg-gray-100">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium  text-gray-800">
-
-                            <div class="w-full flex gap-4 items-center">
-
-                              <div class="flex flex-col gap-1 text-gray-800">
-                                {{product.no}}
-                              </div>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                          <div class="w-full flex gap-4 items-center">
+                            <div class="flex flex-col gap-1 text-gray-800">
+                              {{ product.no }}
                             </div>
-
+                          </div>
                         </td>
                         <td>
-                          <img src={{product.image[0]}} class="w-10 h-10" alt="">
+                          <img src="{{ product.image[0] }}" class="w-10 h-10" alt="">
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.product_name}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{product.on_hand}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ product.product_name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{{ product.on_hand }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                           <div class="p-1 px-2 text-gray-800">
-                            <input type="number" value={{product.counted}} class="w-[50px] border py-1 px-2">
+                            <input type="number" [(ngModel)]="product.counted" class="w-[50px] border py-1 px-2" (input)="updateDifference(product)">
                           </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                           <div class="p-1 px-2 text-gray-800">
-                            {{product.difference}}
+                            {{ product.difference }}
                           </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                          <button (click)="confirmUpdate(product.no)" class="p-1 px-2 text-xs border rounded-sm active:scale-95 text-gray-500">
+                            Update count
+                          </button>
                         </td>
                       </tr>
                     </ng-container>
-
                   </tbody>
+
                 </table>
               </div>
             </div>
