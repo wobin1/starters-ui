@@ -16,6 +16,7 @@ export class DashboardComponent {
     TopSellingProduct: any=null;
     warehouseDetail: any=null;
     pageLoading:boolean=false;
+    chartData:any[]=[]
     products = [
       {
         "name": "SPRING ROLLS (CHICKEN)",
@@ -37,24 +38,35 @@ export class DashboardComponent {
 
     constructor(private api:HttpServiceService, private messageService:MessageService){}
 
-    ngOnInit() {
+    async ngOnInit() {
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         this.getMetrics()
         this.getTopSellingProducts()
-        this.getWarehouseDetail()
 
-        this.data = {
-            // labels: ['A', 'B'],
-            datasets: [
-                {
-                    data: [300, 200],
-                    backgroundColor: [documentStyle.getPropertyValue('--red-700'), documentStyle.getPropertyValue('--gray-400')],
-                    // hoverBackgroundColor: [documentStyle.getPropertyValue('--gray-500'), documentStyle.getPropertyValue('--black-400')]
-                }
-            ]
-        };
 
+        this.api.get('dashboard/warehouses/details').subscribe(
+          res=>{
+            this.warehouseDetail = res;
+            console.log(this.warehouseDetail)
+            this.chartData = [this.warehouseDetail?.data.cold_room, this.warehouseDetail?.data.kitchen]
+
+            console.log('chartData', this.chartData)
+            this.data = {
+              datasets: [
+                  {
+                      data: this.chartData,
+                      backgroundColor: [
+                          documentStyle.getPropertyValue('--red-700'),
+                          documentStyle.getPropertyValue('--gray-400')
+                      ]
+                  }
+              ]
+          };
+          },
+          err=>{
+            this.showError('Error fetching metrics');
+          })
 
         this.options = {
             cutout: '60%',
@@ -96,11 +108,16 @@ export class DashboardComponent {
         res=>{
           this.warehouseDetail = res;
           console.log(this.warehouseDetail)
+          this.chartData = [this.warehouseDetail?.data.cold_room, this.warehouseDetail?.data.kitchen]
+
+          console.log('chartData', this.chartData)
         },
         err=>{
           this.showError('Error fetching metrics');
         }
       )
+
+      return this.chartData
     }
 
     showError(message:string) {
