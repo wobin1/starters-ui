@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { DataViewModule } from 'primeng/dataview';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
@@ -6,7 +7,8 @@ import { HttpServiceService } from '../../../services/http-service.service';
 @Component({
   selector: 'app-monthly-inventory',
   templateUrl: './monthly-inventory.component.html',
-  styleUrl: './monthly-inventory.component.scss'
+  styleUrl: './monthly-inventory.component.scss',
+  providers: [MessageService]  // Import MessageService to use it in the component
 })
 export class MonthlyInventoryComponent {
   istoggleUpdateProduct:boolean = true;
@@ -27,7 +29,7 @@ export class MonthlyInventoryComponent {
 
   tableHeader = ['No', 'Image', 'Product Name', 'On Hand', 'Counted', 'Difference']
 
-  constructor(private router: Router, private api:HttpServiceService){}
+  constructor(private router: Router, private api:HttpServiceService, private messageService: MessageService){}
 
   ngOnInit(){
     this.getWareHouseId();
@@ -129,10 +131,21 @@ export class MonthlyInventoryComponent {
     const item = this.warehouseInventory?.product_list.find((product: any) => product.no === no);
     if (item) {
       console.log(`Confirmed update for product ${item.product_name}:`, item);
-      // You can add additional logic here if needed, such as saving changes to a server
+      this.showSuccess(`${item.product_name} updated successfully`)
     } else {
       console.log(`Product with no. ${no} not found.`);
+      this.showError(`${item.product_name} uupdate failed try again.`)
     }
+  }
+
+
+  showSuccess(message: string) {
+    console.log('showSuccess')
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: message });
+  }
+
+  showError(message: string) {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 
 
