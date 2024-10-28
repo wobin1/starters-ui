@@ -21,15 +21,7 @@ export class ProductDetailComponent {
   productId:any;
   productDetail:any =null;
   reasons:any;
-  images:any = [
-    {
-        itemImageSrc: 'https://i.imgur.com/VWBa2bd.jpg',
-        thumbnailImageSrc: 'https://i.imgur.com/VWBa2bd.jpg',
-        alt: 'Description for Image 1',
-        title: 'Title 1'
-    }
-
-];
+  images:any = [];
   wareHouses:any;
 
 
@@ -44,6 +36,19 @@ updatedQuantityData:any = []
               private messageService: MessageService,
               private api:HttpServiceService){}
 
+              currentIndex = 0; // Tracks the current slide index
+
+  next() {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+  }
+
+  previous() {
+    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+  }
+
+  jumpTo(index: number) {
+    this.currentIndex = index;
+  }
 
 
 
@@ -131,7 +136,7 @@ updatedQuantityData:any = []
         console.log(res);
         this.productDetail = res;
         // this.images = this.productDetail.data.media
-        this.addImages(this.productDetail.data.media)
+        this.images = this.productDetail.data.media
         console.log('images', this.images);
       },
       err=>{
@@ -139,9 +144,6 @@ updatedQuantityData:any = []
       }
     )
   }
-
-
-
 
   getWarehouses(){
     this.api.get('warehouses').subscribe(
@@ -152,16 +154,16 @@ updatedQuantityData:any = []
     )
   }
 
-  addImages(images:any){
-    for(let image of images){
-      this.images.push({
-        itemImageSrc: image,
-        thumbnailImageSrc: image,
-        alt: 'Description for Image'+ this.images.length,
-        title: 'Title'+ this.images.length
-      })
-    }
-  }
+  // addImages(images:any){
+  //   for(let image of images){
+  //     this.images.push({
+  //       itemImageSrc: image,
+  //       thumbnailImageSrc: image,
+  //       alt: 'Description for Image'+ this.images.length,
+  //       title: 'Title'+ this.images.length
+  //     })
+  //   }
+  // }
 
 
   toggleUpdatedProduct(){
