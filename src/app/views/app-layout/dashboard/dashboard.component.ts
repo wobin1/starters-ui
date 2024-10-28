@@ -15,6 +15,7 @@ export class DashboardComponent {
     metrics: any=null;
     TopSellingProduct: any=null;
     warehouseDetail: any=null;
+    pageLoading:boolean=false;
     products = [
       {
         "name": "SPRING ROLLS (CHICKEN)",
@@ -48,7 +49,7 @@ export class DashboardComponent {
             datasets: [
                 {
                     data: [300, 200],
-                    backgroundColor: [documentStyle.getPropertyValue('--black-500'), documentStyle.getPropertyValue('--gray-500')],
+                    backgroundColor: [documentStyle.getPropertyValue('--red-700'), documentStyle.getPropertyValue('--gray-500')],
                     // hoverBackgroundColor: [documentStyle.getPropertyValue('--gray-500'), documentStyle.getPropertyValue('--black-400')]
                 }
             ]
@@ -68,10 +69,12 @@ export class DashboardComponent {
     }
 
     getTopSellingProducts(){
-      this.api.get('dashboard/topsellingproducts').subscribe(
+      this.pageLoading = true;
+      this.api.get('dashboard/products/topselling').subscribe(
         res=>{
           this.TopSellingProduct = res
           console.log(this.TopSellingProduct)
+          this.pageLoading = false;
         }
       )
     }

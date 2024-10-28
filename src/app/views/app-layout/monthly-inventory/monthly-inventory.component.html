@@ -6,7 +6,7 @@
     [pageTitle]="'[Monthly] August Inventory -' + warehouseInventory?.location"
     action3Name="Complete Inventory"
     icon='assets/icons/add.png'
-    buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="completeInventory()" ></app-sub-header>
+    buttonStyle="active:scale-95 bg-primary text-sm text-white p-2 hover:gray-400" (action3)="completeInventory()" ></app-sub-header>
   </div>
 
 
@@ -55,10 +55,10 @@
 
           <div class="status mt-6">
             <div class="w-full ">
-              <div class="flex w-full h-1.5 bg-gray-200 overflow-hidden" role="progressbar"
+              <div class="flex w-full h-1.5 bg-accent overflow-hidden" role="progressbar"
                   [attr.aria-valuenow]="warehouseInventory?.progress"
                   aria-valuemin="0" aria-valuemax="100">
-                <div class="flex flex-col justify-center overflow-hidden bg-black text-xs text-white text-center whitespace-nowrap transition duration-500"
+                <div class="flex flex-col justify-center overflow-hidden bg-primary text-xs text-white text-center whitespace-nowrap transition duration-500"
                     [style.width]="warehouseInventory?.progress + '%'">
                 </div>
               </div>
@@ -215,7 +215,7 @@
 
           <div class=" flex w-full justify-center items-center gap-x-2 py-6 px-4 border-t">
 
-            <button class="active:bg-gray-600 p-2 bg-gray-700 text-gray-400 text-sm">
+            <button class="active:bg-gray-600 p-2 bg-primary text-white text-gray-400 text-sm">
               <span class=" hover:text-white">Generate Inventory Report</span>
             </button>
           </div>

@@ -5,7 +5,7 @@
     pageTitle="Purchases"
     action3Name="Add new purchase"
     icon='assets/icons/add.png'
-    buttonStyle="active:scale-95 bg-gray-950/85 p-2 hover:gray-400" (action3)="  toggleAddPurchase()"></app-sub-header>
+    buttonStyle="active:scale-95 bg-primary text-sm text-white p-2 hover:gray-400" (action3)="  toggleAddPurchase()"></app-sub-header>
 
 <!-- search section -->
  <div class="mt-1">
@@ -208,7 +208,7 @@
             <span class="text-gray-500 text-sm">Advanced settings</span>
           </div>
           <button type="submit" (click)="savePurchase()">
-            <p-button class="p-2 px-4 bg-gray-700 text-white text-sm" label="Save" [loading]="loading"></p-button>
+            <p-button class="p-2 px-4 bg-primary text-white text-sm" label="Save" [loading]="loading"></p-button>
           </button>
         </div>
       </div>

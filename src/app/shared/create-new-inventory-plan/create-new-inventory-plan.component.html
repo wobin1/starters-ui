@@ -60,7 +60,7 @@
                 </select>
               </div>
 
-              <div (click)="addPlanProduct()" class="px-4 py-2 bg-black text-white">Add</div>
+              <div (click)="addPlanProduct()" class="px-4 py-2 bg-primary text-sm text-white">Add</div>
 
               <div *ngFor="let row of planProducts">
                 <span class="px-4 py-1 rounded-full bg-gray-100">{{row.id}}</span>
@@ -82,7 +82,7 @@
             <span class="text-gray-500 text-sm">Advance settings</span>
           </div>
           <button type="submit" >
-            <p-button class="p-2 px-4 bg-gray-700 text-white text-sm" [loading]="loading"  label="Save" ></p-button>
+            <p-button class="p-2 px-4 bg-primary text-white text-sm" [loading]="loading"  label="Save" ></p-button>
           </button>
         </div>
       </form>

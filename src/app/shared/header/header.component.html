@@ -1,4 +1,4 @@
-<div class="flex relative  justify-between items-center py-4 bg-primary  shadow-md px-16">
+<div class="flex relative  justify-between items-center py-4 bg-[#F8F9FA]  shadow-md px-16">
   <!-- logo -->
   <div class="text-lg font-semibold flex gap-4 items-center cursor-pointer text-gray-700">
       <img src="assets/logo.png"  class="" alt="">
@@ -8,7 +8,7 @@
   <!-- menu -->
   <div class="flex items-center gap-8 cursor-pointer">
    <ng-container *ngFor="let row of menu">
-    <nav (click)="route(row.route)" class="whitespace-nowrap lg:flex md:hidden hidden gap-1 text-sm text-gray-500 hover:text-gray-800 active:scale-95">
+    <nav (click)="route(row.route)" class="whitespace-nowrap lg:flex md:hidden hidden gap-1 text-sm text-gray-500 hover:text-secondary active:scale-95">
       <img src={{row.icon}} class="w-5" alt="">
       {{row.name}}
     </nav>

@@ -205,6 +205,10 @@
         </ng-container>
       </div>
 
+      <div *ngIf="TopSellingProduct?.length <=0 && pageLoading" class="w-full flex justify-center items-center h-[50vh]">
+        <app-spinner></app-spinner>
+      </div>
+
       <div class="flex w-full justify-end mt-8">
         <app-pagination></app-pagination>
       </div>
