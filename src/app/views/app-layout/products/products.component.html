@@ -55,7 +55,6 @@
         <ng-container *ngFor="let item of getWarehouseProducts(item.id)">
           <button (click)="routeToDetail(item.id)">
             <app-product-card productName={{item.name}} amountSold={{item.amountSold}} image={{item.media[0]}}></app-product-card>
-
           </button>
         </ng-container>
        </div>
@@ -65,7 +64,8 @@
 
        <!-- Pagination -->
        <div *ngIf="isWareHouse && currentWareHouseId===item.id" class="flex w-full justify-end mt-8">
-        <app-pagination></app-pagination>
+
+        <app-pagination [currentPage]="this.products.meta.current_page" [totalItems]="this.products.meta.total" [lastPage]="this.products.meta.last_page" ></app-pagination>
       </div>
 
      </div>

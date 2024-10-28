@@ -71,7 +71,6 @@ export class SalesComponent {
     this.api.get('sales').subscribe(
       res=>{
         this.sales = res;
-        this.sales = this.sales.data;
         this.pageLoading = false;
       },
       err=>{

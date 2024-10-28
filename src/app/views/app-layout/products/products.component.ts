@@ -56,10 +56,11 @@ export class ProductsComponent {
   }
 
   getProducts(){
-    return this.api.get('products').subscribe(
+    return this.api.get('products?limit=10').subscribe(
       res =>{
         this.products = res
-        this.products = this.products.data
+        this.products = this.products
+        console.log('meta', res)
       }
     )
 
@@ -69,7 +70,7 @@ export class ProductsComponent {
 
 
   getWarehouseProducts(warehouseId:number){
-    let products = this.products.filter((product:any)=>{return product.warehouse_id == warehouseId})
+    let products = this.products.data.filter((product:any)=>{return product.warehouse_id == warehouseId})
     return products
   }
 

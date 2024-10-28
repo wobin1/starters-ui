@@ -61,10 +61,10 @@ export class PurchasesComponent {
   }
   getPurchases(){
     this.pageLoading=true;
-    this.api.get('purchases').subscribe(
+    this.api.get('purchases?page&page_size=10').subscribe(
       res=>{
         this.purchases = res;
-        this.purchases = this.purchases.data;
+        this.purchases = this.purchases;
         this.pageLoading=false;
       }
     )

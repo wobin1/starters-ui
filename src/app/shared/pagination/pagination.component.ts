@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrl: './pagination.component.scss'
 })
 export class PaginationComponent {
+  @Input() totalItems!: number;
+  @Input() currentPage!: number;
+  @Input() lastPage!: number;
 
 }
