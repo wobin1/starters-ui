@@ -9,6 +9,7 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
 
   dropDown:boolean = false;
+  showMobileMenu:boolean = false;
 
     menu = [
       {
@@ -52,5 +53,10 @@ export class HeaderComponent {
 
   showDropDown(){
     this.dropDown = !this.dropDown
+  }
+
+  toggleMobileMenu(){
+    console.log('show mobile menu');
+    this.showMobileMenu =!this.showMobileMenu;
   }
 }

@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EmptyListComponent } from './empty-list/empty-list.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { CreateNewInventoryPlanComponent } from './create-new-inventory-plan/create-new-inventory-plan.component';
+import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 
 
 
@@ -35,6 +36,7 @@ import { CreateNewInventoryPlanComponent } from './create-new-inventory-plan/cre
     EmptyListComponent,
     SpinnerComponent,
     CreateNewInventoryPlanComponent,
+    MobileMenuComponent,
   ],
   imports: [
     CommonModule,
